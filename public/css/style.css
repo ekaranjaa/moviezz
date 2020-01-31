@@ -1,0 +1,86 @@
+.navbar {
+  margin: 0 0 20px 0;
+  padding: 5px 10px;
+  align-items: center;
+  border: solid 1px lightgray;
+  border-top: none;
+}
+
+.user-pp {
+  margin: 0 20px;
+  font-size: 2em;
+}
+
+.content {
+  padding: 0 10px;
+}
+
+.form {
+  max-width: 300px;
+}
+
+.form-wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
+
+.card {
+  padding: 20px;
+  border: solid 1px lightgray;
+  border-radius: 5px;
+}
+
+.wrapper,
+.wrapper-flex {
+  padding: 15px 0;
+}
+
+.wrapper {
+  display: block;
+}
+
+.wrapper-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.wrapper-flex.align-right {
+  justify-content: flex-end;
+}
+
+.wrapper .w-item,
+.wrapper-flex .w-item {
+  margin: 0 5px;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav .nav-controll {
+  margin: 5px 10px;
+}
+
+.circular {
+  padding: 0;
+  height: 40px;
+  width: 40px;
+  flex: 0 0 40px;
+  border: none;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
