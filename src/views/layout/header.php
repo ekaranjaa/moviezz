@@ -2,7 +2,7 @@
     <?php if (isset($_SESSION['user'])) : ?>
         <div class="user-pp circular">
             <a href="/user/edit/<?= $_SESSION['user']['id'] ?>" title="<?= $_SESSION['user']['name'] ?>">
-                <img src="<?= asset('images', $_SESSION['user']['avatar']) ?>" alt="<?= $_SESSION['user']['name'] ?>">
+                <img src="/images/<?= $_SESSION['user']['avatar'] ?>" alt="<?= $_SESSION['user']['name'] ?>">
             </a>
         </div>
     <?php else : ?>

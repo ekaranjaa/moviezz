@@ -19,7 +19,7 @@ require_once __DIR__ . '/../layout/header.php';
         <div class="columns">
             <div class="column">
                 <div class="card is-shadowless">
-                    <img src="<?= asset('images', $data['avatar']) ?>" alt="<?= $data['name'] ?>">
+                    <img src="/images/<?= $data['avatar'] ?>" alt="<?= $data['name'] ?>">
                 </div>
             </div>
             <div class="column">
