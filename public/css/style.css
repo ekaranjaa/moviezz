@@ -7,16 +7,23 @@
 }
 
 .content {
+  margin-top: 30px;
+  padding: 0 10px;
   min-height: 100vh;
 }
 
-.user-pp {
-  margin: 0 20px;
-  font-size: 2em;
+.nav-items {
+  margin: auto;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
 }
 
-.content {
-  padding: 0 10px;
+.user-pp {
+  font-size: 2em;
 }
 
 .form {
@@ -34,6 +41,7 @@
 img {
   height: 100%;
   width: 100%;
+  object-fit: cover;
 }
 
 .card {

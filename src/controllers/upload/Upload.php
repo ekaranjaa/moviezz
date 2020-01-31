@@ -8,7 +8,7 @@ class Upload
 
     public function __construct()
     {
-        $this->validtypes = ['jpeg', 'png', 'jpg'];
+        $this->validtypes = ['jpeg', 'png', 'jpg', 'gif'];
     }
 
     public function upload_image(array $file)

@@ -42,7 +42,7 @@ require_once __DIR__ . '/../layout/header.php';
                             <p>Notice!</p>
                         </div>
                         <div class="message-body">
-                            <p>If you're not changing the password input and confirm your current password to save changes.</p>
+                            <p>If you're not changing the password, input and confirm your current password to save changes.</p>
                         </div>
                     </article>
                     <div class="control field">

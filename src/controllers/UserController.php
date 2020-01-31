@@ -248,7 +248,7 @@ class UserController extends Controller
                                                 'email' => $row['email'],
                                                 'username' => $row['username']
                                             ];
-                                            header('location: /');
+                                            header('location: /user/edit/' . $id);
                                             die;
                                         }
                                     } else {
@@ -280,7 +280,7 @@ class UserController extends Controller
                                                 'email' => $row['email'],
                                                 'username' => $row['username']
                                             ];
-                                            header('location: /');
+                                            header('location: /user/edit/' . $id);
                                             die;
                                         }
                                     } else {
