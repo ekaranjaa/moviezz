@@ -4,11 +4,13 @@ class MovieController extends Controller
 {
     private $model;
     private $movie;
+    private $auth;
     private $handler;
 
     public function __construct()
     {
         $this->model = $this->model('movie');
+        $this->auth = $this->extension('auth/auth');
         $this->handler = $this->extension('upload/upload');
 
         $this->movie = [
@@ -40,31 +42,44 @@ class MovieController extends Controller
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $name = $this->movie['name'];
-            $data = $this->model->read($this->movie);
 
-            if ($data->num_rows > 0) {
-                while ($row = $data->fetch_assoc()) {
-                    if ($name == $row['name']) {
-                        $_SESSION['fb'] = 'Movie ' . $name . ' already exists';
+            $fields = [
+                'cover_image' => $this->movie['cover_image'],
+                'name' => $this->movie['name'],
+                'genre' => $this->movie['genre'],
+                'price' => $this->movie['price']
+            ];
+
+            if ($this->auth->fields($fields)) {
+                $name = $this->movie['name'];
+                $data = $this->model->read($this->movie);
+
+                if ($data->num_rows > 0) {
+                    while ($row = $data->fetch_assoc()) {
+                        if ($name == $row['name']) {
+                            $_SESSION['fb'] = 'Movie ' . $name . ' already exists';
+                            header('location: /');
+                        }
+                    }
+                } else {
+                    if ($this->handler->upload_image($this->movie['cover_image'])) {
+                        $this->movie['cover_image'] = $this->handler->fb;
+
+                        if ($this->model->create($this->movie)) {
+                            $_SESSION['fb'] = 'Successfully added movie';
+                            header('location: /');
+                        } else {
+                            $_SESSION['fb'] = 'Error adding movie';
+                            header('location: /');
+                        }
+                    } else {
+                        $_SESSION['fb'] = 'File upload error: ' . $this->handler->fb;
                         header('location: /');
                     }
                 }
             } else {
-                if ($this->handler->upload_image($this->movie['cover_image'])) {
-                    $this->movie['cover_image'] = $this->handler->fb;
-
-                    if ($this->model->create($this->movie)) {
-                        $_SESSION['fb'] = 'Successfully added movie';
-                        header('location: /');
-                    } else {
-                        $_SESSION['fb'] = 'Error adding movie';
-                        header('location: /');
-                    }
-                } else {
-                    $_SESSION['fb'] = 'File upload error: ' . $this->handler->fb;
-                    header('location: /');
-                }
+                $_SESSION['fb'] = $this->auth->fb;
+                header('location: /');
             }
         } else {
             exit('Invalid request');
@@ -75,15 +90,30 @@ class MovieController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $this->movie['id'] = $id;
-            $data = $this->model->read($this->movie);
-            $row = $data->fetch_assoc();
+            if ($this->auth->fields($this->movie)) {
 
-            if (!empty($this->movie['cover_image']['tmp_name'])) {
-                $this->handler->remove_image($row['cover_image']);
+                $this->movie['id'] = $id;
+                $data = $this->model->read($this->movie);
+                $row = $data->fetch_assoc();
 
-                if ($this->handler->upload_image($this->movie['cover_image'])) {
-                    $this->movie['cover_image'] = $this->handler->fb;
+                if (!empty($this->movie['cover_image']['tmp_name'])) {
+                    $this->handler->remove_image($row['cover_image']);
+
+                    if ($this->handler->upload_image($this->movie['cover_image'])) {
+                        $this->movie['cover_image'] = $this->handler->fb;
+                        if ($this->model->edit($this->movie)) {
+                            $_SESSION['fb'] = 'Updated movie successfully';
+                            header('location: /');
+                        } else {
+                            $_SESSION['fb'] = 'Error updating.';
+                            header('location: /movie/edit/' . $id);
+                        }
+                    } else {
+                        $_SESSION['fb'] = 'Error updating profile photo: ' . $this->handler->fb;
+                    }
+                } else {
+                    $this->movie['cover_image'] = $row['cover_image'];
+
                     if ($this->model->edit($this->movie)) {
                         $_SESSION['fb'] = 'Updated movie successfully';
                         header('location: /');
@@ -91,19 +121,10 @@ class MovieController extends Controller
                         $_SESSION['fb'] = 'Error updating.';
                         header('location: /movie/edit/' . $id);
                     }
-                } else {
-                    $_SESSION['fb'] = 'Error updating profile photo: ' . $this->handler->fb;
                 }
             } else {
-                $this->movie['cover_image'] = $row['cover_image'];
-
-                if ($this->model->edit($this->movie)) {
-                    $_SESSION['fb'] = 'Updated movie successfully';
-                    header('location: /');
-                } else {
-                    $_SESSION['fb'] = 'Error updating.';
-                    header('location: /movie/edit/' . $id);
-                }
+                $_SESSION['fb'] = $this->auth->fb;
+                header('location: /movie/edit/' . $id);
             }
         } else {
             $this->movie['id'] = $id;

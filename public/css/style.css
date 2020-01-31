@@ -6,6 +6,10 @@
   border-top: none;
 }
 
+.content {
+  min-height: 100vh;
+}
+
 .user-pp {
   margin: 0 20px;
   font-size: 2em;
