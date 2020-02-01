@@ -1,13 +1,14 @@
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="nav-items">
-        <?php if (isset($_SESSION['user'])) : ?>
+        <?php $user = !empty($_COOKIE['user']) ? unserialize($_COOKIE['user']) : $_SESSION['user']; ?>
+        <?php if (isset($user)) : ?>
             <div class="user-pp circular">
-                <a href="/user/edit/<?= $_SESSION['user']['id'] ?>" title="<?= $_SESSION['user']['name'] ?>">
-                    <img src="/images/<?= $_SESSION['user']['avatar'] ?>" alt="<?= $_SESSION['user']['name'] ?>">
+                <a href="/user/edit/<?= $user['id'] ?>" title="<?= $user['name'] ?>">
+                    <img src="/images/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>">
                 </a>
             </div>
             &nbsp;
-            <h2 class="is-size-5"><?= ucwords($_SESSION['user']['username']) ?></h2>
+            <h2 class="is-size-5"><?= ucwords($user['username']) ?></h2>
         <?php else : ?>
             <div class="user-pp circular">
                 <a class="has-text-grey-dark" href="/">
@@ -27,7 +28,7 @@
                 <div class="navbar-item">
                     <div class="buttons">
                         <?php
-                        if (isset($_SESSION['user'])) :
+                        if (isset($user)) :
                         ?>
                             <a class="button is-light" href="/user/signout">Log out</a>
                         <?php else : ?>

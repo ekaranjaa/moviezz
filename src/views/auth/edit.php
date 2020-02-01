@@ -3,7 +3,7 @@ require_once __DIR__ . '/../layout/head.php';
 require_once __DIR__ . '/../layout/header.php';
 ?>
 <div class="content">
-    <?php if (isset($_SESSION['fb'])) : ?>
+    <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
         <div class="notification is-info">
             <strong>
                 <?= $_SESSION['fb'];

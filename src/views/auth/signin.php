@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layout/head.php'; ?>
 <div class="form-wrapper">
     <div class="form">
-        <?php if (isset($_SESSION['fb'])) : ?>
+        <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
             <div class="notification is-info">
                 <strong>
                     <?= $_SESSION['fb'];
@@ -18,6 +18,12 @@
             </div>
             <div class="control field has-text-right">
                 <p class="is-size-7 has-text-grey-light">Forgot password ? <a href="/user/reset" class="has-text-grey-dark">reset</a></p>
+            </div>
+            <div class="control field">
+                <label class="checkbox">
+                    <input type="checkbox" name="persist" value="1">
+                    <span class="has-text-grey-light">Remember me</span>
+                </label>
             </div>
             <div class="control field">
                 <div class="has-text-centered">

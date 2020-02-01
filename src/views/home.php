@@ -12,7 +12,7 @@ if (!empty($data['id'])) {
 }
 ?>
 <div class="content">
-    <?php if (isset($_SESSION['fb'])) : ?>
+    <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
         <div class="notification is-info">
             <strong>
                 <?= $_SESSION['fb'];
@@ -21,7 +21,7 @@ if (!empty($data['id'])) {
         </div>
     <?php endif; ?>
     <div class="columns">
-        <?php if (isset($_SESSION['user'])) : ?>
+        <?php if (isset($user)) : ?>
             <div class="column is-3">
                 <form action="<?= $action ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?= !empty($data['id']) ? $data['id'] : '' ?>">
@@ -65,7 +65,7 @@ if (!empty($data['id'])) {
                                 <td><?= $movie['price'] ?></td>
                                 <td><?= $movie['created_at'] ?></td>
                                 <td>
-                                    <?php if (isset($_SESSION['user'])) : ?>
+                                    <?php if (isset($user)) : ?>
                                         <a class="button is-info is-small" href="/movie/edit/<?= $movie['id'] ?>"><i class="far fa-edit"></i></a>
                                         <a class="button is-danger is-small" href="/movie/delete/<?= $movie['id'] ?>"><i class="far fa-trash-alt"></i></a>
                                     <?php endif; ?>
