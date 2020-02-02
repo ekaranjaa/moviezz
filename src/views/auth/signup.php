@@ -9,21 +9,24 @@
                 </strong>
             </div>
         <?php endif; ?>
-        <form action="/user/signin" method="post">
+        <form action="/user/signup" method="post" enctype="multipart/form-data">
             <div class="control field">
-                <input class="input" type="text" name="username" placeholder="Username" autofocus>
+                <input class="input" type="file" name="avatar">
+            </div>
+            <div class="control field">
+                <input class="input" type="text" name="name" placeholder="Name" autofocus>
+            </div>
+            <div class="control field">
+                <input class="input" type="text" name="email" placeholder="Email">
+            </div>
+            <div class="control field">
+                <input class="input" type="text" name="username" placeholder="Username">
             </div>
             <div class="control field">
                 <input class="input" type="password" name="password" placeholder="Password">
             </div>
-            <div class="control field has-text-right">
-                <p class="is-size-7 has-text-grey-light">Forgot password ? <a href="/user/reset" class="has-text-grey-dark">reset</a></p>
-            </div>
             <div class="control field">
-                <label class="checkbox">
-                    <input type="checkbox" name="persist" value="1">
-                    <span class="has-text-grey-light">Remember me</span>
-                </label>
+                <input class="input" type="password" name="confirm_password" placeholder="Confirm password">
             </div>
             <div class="control field">
                 <div class="has-text-centered">
@@ -31,7 +34,7 @@
                 </div>
             </div>
             <div class="control field">
-                <p class="is-size-7 has-text-grey-light">Don't have a account ? <a href="/user/register" class="has-text-grey-dark">register</a></p>
+                <p class="is-size-7 has-text-grey-light">Already have a account ? <a href="/user/login" class="has-text-grey-dark">login</a></p>
             </div>
         </form>
     </div>

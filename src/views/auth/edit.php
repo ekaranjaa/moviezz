@@ -11,9 +11,9 @@ require_once __DIR__ . '/../layout/header.php';
             </strong>
         </div>
     <?php endif; ?>
-    <form action="/user/edit/<?= $data['id'] ?>" method="post" enctype="multipart/form-data">
+    <form action="/user/edit/<?= $data['username'] ?>" method="post" enctype="multipart/form-data">
         <div class="wrapper-flex align-right">
-            <a class="button is-danger w-item" href="/user/delete/<?= $data['id'] ?>">Delete accout</a>
+            <a class="button is-danger w-item" href="/user/delete/<?= $data['username'] ?>">Delete accout</a>
             <button class="button is-info w-item">Update profile</button>
         </div>
         <div class="columns">

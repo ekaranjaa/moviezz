@@ -9,24 +9,21 @@
                 </strong>
             </div>
         <?php endif; ?>
-        <form action="/user/register" method="post" enctype="multipart/form-data">
+        <form action="/user/login" method="post">
             <div class="control field">
-                <input class="input" type="file" name="avatar">
-            </div>
-            <div class="control field">
-                <input class="input" type="text" name="name" placeholder="Name" autofocus>
-            </div>
-            <div class="control field">
-                <input class="input" type="text" name="email" placeholder="Email">
-            </div>
-            <div class="control field">
-                <input class="input" type="text" name="username" placeholder="Username">
+                <input class="input" type="text" name="username" placeholder="Username" autofocus>
             </div>
             <div class="control field">
                 <input class="input" type="password" name="password" placeholder="Password">
             </div>
+            <div class="control field has-text-right">
+                <p class="is-size-7 has-text-grey-light">Forgot password ? <a href="/user/reset" class="has-text-grey-dark">reset</a></p>
+            </div>
             <div class="control field">
-                <input class="input" type="password" name="confirm_password" placeholder="Confirm password">
+                <label class="checkbox">
+                    <input type="checkbox" name="persist" value="1">
+                    <span class="has-text-grey-light">Remember me</span>
+                </label>
             </div>
             <div class="control field">
                 <div class="has-text-centered">
@@ -34,7 +31,7 @@
                 </div>
             </div>
             <div class="control field">
-                <p class="is-size-7 has-text-grey-light">Already have a account ? <a href="/user/signin" class="has-text-grey-dark">signin</a></p>
+                <p class="is-size-7 has-text-grey-light">Don't have a account ? <a href="/user/signup" class="has-text-grey-dark">signup</a></p>
             </div>
         </form>
     </div>

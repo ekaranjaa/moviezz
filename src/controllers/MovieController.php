@@ -5,16 +5,16 @@ class MovieController extends Controller
     private $model;
     private $movie;
     private $auth;
-    private $handler;
+    private $helper;
 
     public function __construct()
     {
         $this->model = $this->model('movie');
-        $this->auth = $this->extension('auth/auth');
-        $this->handler = $this->extension('upload/upload');
+        $this->auth = $this->helper('auth');
+        $this->helper = $this->helper('upload');
 
         $this->movie = [
-            'id' => $_POST['id'],
+            'id' => !empty($_POST['id']) ? $_POST['id'] : 0,
             'cover_image' => $_FILES['cover_image'],
             'name' => $_POST['name'],
             'genre' => $_POST['genre'],
@@ -43,15 +43,7 @@ class MovieController extends Controller
     {
         if (!empty($_SESSION['user']) || !empty($_COOKIE['user'])) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-                $fields = [
-                    'cover_image' => $this->movie['cover_image'],
-                    'name' => $this->movie['name'],
-                    'genre' => $this->movie['genre'],
-                    'price' => $this->movie['price']
-                ];
-
-                if ($this->auth->fields($fields)) {
+                if ($this->auth->fields($this->movie)) {
                     $name = $this->movie['name'];
                     $data = $this->model->read($this->movie);
 
@@ -63,8 +55,8 @@ class MovieController extends Controller
                             }
                         }
                     } else {
-                        if ($this->handler->upload_image($this->movie['cover_image'])) {
-                            $this->movie['cover_image'] = $this->handler->fb;
+                        if ($this->helper->upload_image($this->movie['cover_image'], $name)) {
+                            $this->movie['cover_image'] = $this->helper->fb;
 
                             if ($this->model->create($this->movie)) {
                                 $_SESSION['fb'] = 'Successfully added movie';
@@ -74,7 +66,7 @@ class MovieController extends Controller
                                 header('location: /');
                             }
                         } else {
-                            $_SESSION['fb'] = 'File upload error: ' . $this->handler->fb;
+                            $_SESSION['fb'] = 'File upload error: ' . $this->helper->fb;
                             header('location: /');
                         }
                     }
@@ -103,10 +95,10 @@ class MovieController extends Controller
                     $row = $data->fetch_assoc();
 
                     if (!empty($this->movie['cover_image']['tmp_name'])) {
-                        $this->handler->remove_image($row['cover_image']);
+                        $this->helper->remove_image($row['cover_image']);
 
-                        if ($this->handler->upload_image($this->movie['cover_image'])) {
-                            $this->movie['cover_image'] = $this->handler->fb;
+                        if ($this->helper->upload_image($this->movie['cover_image'], $this->movie['name'])) {
+                            $this->movie['cover_image'] = $this->helper->fb;
                             if ($this->model->edit($this->movie)) {
                                 $_SESSION['fb'] = 'Updated movie successfully';
                                 header('location: /');
@@ -115,7 +107,7 @@ class MovieController extends Controller
                                 header('location: /movie/edit/' . $id);
                             }
                         } else {
-                            $_SESSION['fb'] = 'Error updating profile photo: ' . $this->handler->fb;
+                            $_SESSION['fb'] = 'Error updating profile photo: ' . $this->helper->fb;
                         }
                     } else {
                         $this->movie['cover_image'] = $row['cover_image'];
@@ -158,7 +150,7 @@ class MovieController extends Controller
             $data = $this->model->read($this->movie);
             $row = $data->fetch_assoc();
 
-            if ($this->handler->remove_image($row['cover_image'])) {
+            if ($this->helper->remove_image($row['cover_image'])) {
                 if ($this->model->delete($id)) {
                     $_SESSION['fb'] = 'Movie deleted';
                     header('location: /');
@@ -167,7 +159,7 @@ class MovieController extends Controller
                     header('location: /');
                 }
             } else {
-                $_SESSION['fb'] = 'Error deleting cover image: ' . $this->handler->fb;
+                $_SESSION['fb'] = 'Error deleting cover image: ' . $this->helper->fb;
                 header('location: /');
             }
         } else {

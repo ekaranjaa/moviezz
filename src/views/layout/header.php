@@ -3,7 +3,7 @@
         <?php $user = !empty($_COOKIE['user']) ? unserialize($_COOKIE['user']) : $_SESSION['user']; ?>
         <?php if (isset($user)) : ?>
             <div class="user-pp circular">
-                <a href="/user/edit/<?= $user['id'] ?>" title="<?= $user['name'] ?>">
+                <a href="/user/edit/<?= $user['username'] ?>" title="<?= $user['name'] ?>">
                     <img src="/images/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>">
                 </a>
             </div>
@@ -30,10 +30,10 @@
                         <?php
                         if (isset($user)) :
                         ?>
-                            <a class="button is-light" href="/user/signout">Log out</a>
+                            <a class="button is-light" href="/user/logout">Log out</a>
                         <?php else : ?>
-                            <a class="button is-primary" href="/user/register"><strong>Sign up</strong></a>
-                            <a class="button is-light" href="/user/signin">Signin</a>
+                            <a class="button is-primary" href="/user/signup"><strong>Sign up</strong></a>
+                            <a class="button is-light" href="/user/login">Signin</a>
                         <?php endif; ?>
                     </div>
                 </div>

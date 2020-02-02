@@ -58,9 +58,9 @@ class User extends Model
         return $fb;
     }
 
-    public function delete(int $id)
+    public function delete(string $username)
     {
-        $query = "DELETE FROM `users` WHERE `id`='$id'";
+        $query = "DELETE FROM `users` WHERE `username`='$username'";
 
         if ($this->sql()->query($query)) {
             $fb = true;

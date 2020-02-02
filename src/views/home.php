@@ -2,15 +2,6 @@
 require_once __DIR__ . '/layout/head.php';
 require_once __DIR__ . '/layout/header.php';
 ?>
-<?php
-if (!empty($data['id'])) {
-    $action = '/movie/edit/' . $data['id'];
-    $btntext = 'Update';
-} else {
-    $action = '/movie/add';
-    $btntext = 'Add';
-}
-?>
 <div class="content">
     <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
         <div class="notification is-info">
@@ -23,6 +14,15 @@ if (!empty($data['id'])) {
     <div class="columns">
         <?php if (isset($user)) : ?>
             <div class="column is-3">
+                <?php
+                if (!empty($data['id'])) {
+                    $action = '/movie/edit/' . $data['id'];
+                    $btntext = 'Update';
+                } else {
+                    $action = '/movie/add';
+                    $btntext = 'Add';
+                }
+                ?>
                 <form action="<?= $action ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?= !empty($data['id']) ? $data['id'] : '' ?>">
                     <div class="control field">

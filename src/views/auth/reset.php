@@ -26,7 +26,7 @@
             </div>
             <div class="control field">
                 <p class="is-size-7 has-text-grey-light">
-                    Back to <a href="/user/signin" class="has-text-grey-dark">signin</a> or <a href="/user/register" class="has-text-grey-dark">signup</a>
+                    Back to <a href="/user/login" class="has-text-grey-dark">login</a> or <a href="/user/signup" class="has-text-grey-dark">signup</a>
                 </p>
             </div>
         </form>

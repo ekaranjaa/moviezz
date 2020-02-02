@@ -3,7 +3,7 @@
 class Upload
 {
     private $validtypes;
-    private $path = __DIR__ . '/../../../public/images/';
+    private $path = __DIR__ . '/../../public/images/';
     public $fb;
 
     public function __construct()
@@ -11,12 +11,13 @@ class Upload
         $this->validtypes = ['jpeg', 'png', 'jpg', 'gif'];
     }
 
-    public function upload_image(array $file)
+    public function upload_image(array $file, string $filename = '')
     {
         $file_name = $file['name'];
-        $file_name = explode('.', $file_name);
-        $file_name[0] = rand(0, 1000);
-        $target_file = $this->path . $file_name[0] . '.' . $file_name[1];
+        $array_file_name = explode('.', $file_name);
+        $new_file_name = !empty($filename) ? $filename : rand(0, 1000);
+        $file_name = str_replace($array_file_name[0], $new_file_name, $file_name);
+        $target_file = $this->path . $file_name;
 
         $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         $size = $file['size'];
@@ -35,9 +36,8 @@ class Upload
                             $this->fb = 'An error occured while uploading the file';
                             $fb = false;
                         } else {
-
                             if (move_uploaded_file($file['tmp_name'], $target_file)) {
-                                $this->fb = implode('.', $file_name);
+                                $this->fb = $file_name;
                                 $fb = true;
                             } else {
                                 $this->fb = 'Error uploading file';
