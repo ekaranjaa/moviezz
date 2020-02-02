@@ -9,9 +9,10 @@
                 </strong>
             </div>
         <?php endif; ?>
+        <?php $form_input = !empty($_SESSION['form_input']) ? $_SESSION['form_input'] : ''; ?>
         <form action="/user/login" method="post">
             <div class="control field">
-                <input class="input" type="text" name="username" placeholder="Username" autofocus>
+                <input class="input" type="text" name="username" value="<?= $form_input['username'] ?>" placeholder="Username" autofocus>
             </div>
             <div class="control field">
                 <input class="input" type="password" name="password" placeholder="Password">
@@ -34,6 +35,7 @@
                 <p class="is-size-7 has-text-grey-light">Don't have a account ? <a href="/user/signup" class="has-text-grey-dark">signup</a></p>
             </div>
         </form>
+        <?php unset($_SESSION['form_input']); ?>
     </div>
 </div>
 <?php require_once __DIR__ . '/../layout/foo.php'; ?>

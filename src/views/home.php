@@ -23,19 +23,20 @@ require_once __DIR__ . '/layout/header.php';
                     $btntext = 'Add';
                 }
                 ?>
+                <?php $form_input = !empty($_SESSION['form_input']) ? $_SESSION['form_input'] : ''; ?>
                 <form action="<?= $action ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?= !empty($data['id']) ? $data['id'] : '' ?>">
                     <div class="control field">
                         <input class="input" type="file" name="cover_image" value="<?= !empty($data['image']) ? $data['image'] : '' ?>">
                     </div>
                     <div class="control field">
-                        <input class="input" type="text" name="name" value="<?= !empty($data['name']) ? $data['name'] : '' ?>" placeholder="Name" autofocus>
+                        <input class="input" type="text" name="name" value="<?= !empty($data['name']) ? $data['name'] : $form_input['name'] ?>" placeholder="Name" autofocus>
                     </div>
                     <div class="control field">
-                        <input class="input" type="text" name="genre" value="<?= !empty($data['genre']) ? $data['genre'] : '' ?>" placeholder="Genre">
+                        <input class="input" type="text" name="genre" value="<?= !empty($data['genre']) ? $data['genre'] : $form_input['genre'] ?>" placeholder="Genre">
                     </div>
                     <div class="control field">
-                        <input class="input" type="number" name="price" value="<?= !empty($data['price']) ? $data['price'] : '' ?>" placeholder="Price">
+                        <input class="input" type="number" name="price" value="<?= !empty($data['price']) ? $data['price'] : $form_input['price'] ?>" placeholder="Price">
                     </div>
                     <div class="control field">
                         <div class="has-text-centered">
@@ -43,6 +44,7 @@ require_once __DIR__ . '/layout/header.php';
                         </div>
                     </div>
                 </form>
+                <?php unset($_SESSION['form_input']); ?>
             </div>
         <?php endif; ?>
         <?php if (!isset($data['id'])) : ?>

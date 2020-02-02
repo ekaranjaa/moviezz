@@ -9,9 +9,10 @@
                 </strong>
             </div>
         <?php endif; ?>
+        <?php $form_input = !empty($_SESSION['form_input']) ? $_SESSION['form_input'] : ''; ?>
         <form action="/user/reset" method="post">
             <div class="control field">
-                <input class="input" type="text" name="email" placeholder="Email" autofocus>
+                <input class="input" type="text" name="email" placeholder="Email" value="<?= $form_input['email'] ?>" autofocus>
             </div>
             <div class="control field">
                 <input class="input" type="password" name="password" placeholder="New password">
@@ -30,6 +31,7 @@
                 </p>
             </div>
         </form>
+        <?php unset($_SESSION['form_input']); ?>
     </div>
 </div>
 <?php require_once __DIR__ . '/../layout/foo.php'; ?>

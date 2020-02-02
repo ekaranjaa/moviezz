@@ -62,20 +62,22 @@ class UserController extends Controller
 
                                 header('location: /');
                             } else {
+                                $_SESSION['form_input'] = $this->user;
                                 $_SESSION['fb'] = 'Incorrect password for user ' . $username;
                                 header('location: /user/login');
                             }
                         } else {
-                            $_SESSION['fb'] = 'User ' . $username . ' does not exist.';
+                            $_SESSION['fb'] = 'User ' . $username . ' does not exist';
                             header('location: /user/login');
                         }
                         die;
                     }
                 } else {
-                    $_SESSION['fb'] = 'User ' . $username . ' does not exist.';
+                    $_SESSION['fb'] = 'User ' . $username . ' does not exist';
                     header('location: /user/login');
                 }
             } else {
+                $_SESSION['form_input'] = $this->user;
                 $_SESSION['fb'] = $this->auth->fb;
                 header('location: /user/login');
             }
@@ -136,6 +138,7 @@ class UserController extends Controller
                             header('location: /user/reset');
                         }
                     } else {
+                        $_SESSION['form_input'] = $this->user;
                         $_SESSION['fb'] = $this->auth->fb;
                         header('location: /user/reset');
                     }
@@ -144,6 +147,7 @@ class UserController extends Controller
                     header('location: /user/reset');
                 }
             } else {
+                $_SESSION['form_input'] = $this->user;
                 $_SESSION['fb'] = $this->auth->fb;
                 header('location: /user/reset');
             }
@@ -206,6 +210,7 @@ class UserController extends Controller
                             }
                         }
                     } else {
+                        $_SESSION['form_input'] = $this->user;
                         $_SESSION['fb'] = $this->auth->fb;
                         header('location: /user/signup');
                     }
@@ -214,6 +219,7 @@ class UserController extends Controller
                     header('location: /user/signup');
                 }
             } else {
+                $_SESSION['form_input'] = $this->user;
                 $_SESSION['fb'] = $this->auth->fb;
                 header('location: /user/signup');
             }

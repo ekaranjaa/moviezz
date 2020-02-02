@@ -66,11 +66,13 @@ class MovieController extends Controller
                                 header('location: /');
                             }
                         } else {
+                            $_SESSION['form_input'] = $this->movie;
                             $_SESSION['fb'] = 'File upload error: ' . $this->helper->fb;
                             header('location: /');
                         }
                     }
                 } else {
+                    $_SESSION['form_input'] = $this->movie;
                     $_SESSION['fb'] = $this->auth->fb;
                     header('location: /');
                 }
