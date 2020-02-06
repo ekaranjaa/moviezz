@@ -69,9 +69,9 @@ require_once __DIR__ . '/layout/header.php';
                                 <td>
                                     <?php if (isset($user)) : ?>
                                         <a class="button is-info is-small" href="/movie/edit/<?= $movie['id'] ?>"><i class="far fa-edit"></i></a>
-                                        <a class="button is-danger is-small" href="/movie/delete/<?= $movie['id'] ?>"><i class="far fa-trash-alt"></i></a>
+                                        <a class="button is-danger is-small" href="/movie/delete/<?= $movie['slug'] ?>"><i class="far fa-trash-alt"></i></a>
                                     <?php endif; ?>
-                                    <a class="button is-warning is-small" href="/movie/display/<?= $movie['id'] ?>"><i class="far fa-eye"></i></a>
+                                    <a class="button is-warning is-small" href="/movie/display/<?= $movie['slug'] ?>"><i class="far fa-eye"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

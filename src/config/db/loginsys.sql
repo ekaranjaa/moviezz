@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `loginsys`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `avatar` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
+  `slug` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
@@ -12,16 +13,19 @@ CREATE TABLE IF NOT EXISTS `loginsys`.`users` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `avatar_UNIQUE` (`avatar` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC));
 
 CREATE TABLE IF NOT EXISTS `loginsys`.`movies` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cover_image` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
+  `slug` VARCHAR(255) NOT NULL,
   `genre` VARCHAR(255) NOT NULL,
   `price` INT(5) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `cover_image_UNIQUE` (`cover_image` ASC),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC));

@@ -17,6 +17,7 @@ class UserController extends Controller
             'id' => !empty($_POST['id']) ? $_POST['id'] : 2,
             'avatar' => $_FILES['avatar'],
             'name' => $_POST['name'],
+            'slug' => strtolower($_POST['username']),
             'email' => $_POST['email'],
             'username' => $_POST['username'],
             'password' => $_POST['password'],
@@ -50,6 +51,7 @@ class UserController extends Controller
                                     'id' => $row['id'],
                                     'avatar' => $row['avatar'],
                                     'name' => $row['name'],
+                                    'slug' => $row['slug'],
                                     'email' => $row['email'],
                                     'username' => $row['username']
                                 ];
@@ -179,7 +181,7 @@ class UserController extends Controller
                                 }
                             }
                         } else {
-                            if ($this->helper->upload_image($this->user['avatar'], $this->user['username'])) {
+                            if ($this->helper->upload_image($this->user['avatar'], $this->user['slug'])) {
                                 $this->user['avatar'] = $this->helper->fb;
 
                                 if ($this->model->create($this->user)) {
@@ -193,6 +195,7 @@ class UserController extends Controller
                                                 'id' => $row['id'],
                                                 'avatar' => $row['avatar'],
                                                 'name' => $row['name'],
+                                                'slug' => $row['slug'],
                                                 'email' => $row['email'],
                                                 'username' => $row['username']
                                             ];
@@ -205,6 +208,7 @@ class UserController extends Controller
                                     header('location: /user/signup');
                                 }
                             } else {
+                                $_SESSION['form_input'] = $this->user;
                                 $_SESSION['fb'] = 'Error uploading image: ' . $this->helper->fb;
                                 header('location: /user/signup');
                             }
@@ -228,62 +232,61 @@ class UserController extends Controller
         }
     }
 
-    public function edit(string $username)
+    public function edit(string $slug)
     {
         if (!empty($_SESSION['user']) || !empty($_COOKIE['user'])) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+                $data = $this->model->read($this->user);
+                if ($data->num_rows > 0) {
+                    $row = $data->fetch_assoc();
+                    $user = [
+                        'id' => $row['id'],
+                        'avatar' => $row['avatar'],
+                        'name' => $row['name'],
+                        'slug' => $row['slug'],
+                        'email' => $row['email'],
+                        'username' => $row['username']
+                    ];
+                } else {
+                    $_SESSION['fb'] = 'There was an error retrieving your data';
+                    unset($_SESSION['user']);
+                    setcookie('user', '', time() - 3600, '/');
+                }
 
                 if ($this->auth->fields($this->user)) {
                     if ($this->auth->email($this->user['email'])) {
                         $passwords = [$this->user['password'], $this->user['confirm_password']];
 
                         if ($this->auth->password($passwords)) {
-                            $this->user['username'] = $username;
+                            $this->user['slug'] = $slug;
                             $data = $this->model->read($this->user);
                             $row = $data->fetch_assoc();
 
                             if (!empty($this->user['avatar']['tmp_name'])) {
                                 $this->helper->remove_image($row['avatar']);
 
-                                if ($this->helper->upload_image($this->user['avatar'], $this->user['username'])) {
+                                if ($this->helper->upload_image($this->user['avatar'], $this->user['slug'])) {
                                     $this->user['avatar'] = $this->helper->fb;
 
                                     if ($this->model->edit($this->user)) {
                                         $_SESSION['fb'] = 'Profile successfully updated';
 
-                                        $data = $this->model->read($this->user);
-
-                                        if ($data->num_rows > 0) {
-                                            while ($row = $data->fetch_assoc()) {
-
-                                                $user = [
-                                                    'id' => $row['id'],
-                                                    'avatar' => $row['avatar'],
-                                                    'name' => $row['name'],
-                                                    'email' => $row['email'],
-                                                    'username' => $row['username']
-                                                ];
-
-                                                if (!empty($_SESSION['user'])) {
-                                                    unset($_SESSION['user']);
-                                                    $_SESSION['user'] = $user;
-                                                } else {
-                                                    setcookie('user', '', time() - 3600, '/');
-                                                    setcookie('user', $user, time() + (3600 * 24), '/');
-                                                }
-
-                                                header('location: /user/edit/' . $username);
-                                                die;
-                                            }
-                                        } else {
-                                            $_SESSION['fb'] = 'There was an error retrieving your data';
+                                        if (!empty($_SESSION['user'])) {
                                             unset($_SESSION['user']);
+                                            $_SESSION['user'] = $user;
+                                        } else {
+                                            setcookie('user', '', time() - 3600, '/');
+                                            setcookie('user', $user, time() + (3600 * 24), '/');
                                         }
+
+                                        header('location: /user/edit/' . $slug);
                                     } else {
                                         $_SESSION['fb'] = 'Error updating.';
-                                        header('location: /user/edit/' . $username);
+                                        header('location: /user/edit/' . $slug);
                                     }
                                 } else {
+                                    $_SESSION['form_input'] = $this->user;
                                     $_SESSION['fb'] = 'Error updating profile photo: ' . $this->helper->fb;
                                 }
                             } else {
@@ -295,42 +298,35 @@ class UserController extends Controller
 
                                         $data = $this->model->read($this->user);
 
-                                        if ($data->num_rows > 0) {
-                                            while ($row = $data->fetch_assoc()) {
-                                                $_SESSION['user'] = [
-                                                    'id' => $row['id'],
-                                                    'avatar' => $row['avatar'],
-                                                    'name' => $row['name'],
-                                                    'email' => $row['email'],
-                                                    'username' => $row['username']
-                                                ];
-                                                header('location: /user/edit/' . $username);
-                                                die;
-                                            }
-                                        } else {
-                                            $_SESSION['fb'] = 'There was an error retrieving your data';
+                                        if (!empty($_SESSION['user'])) {
                                             unset($_SESSION['user']);
+                                            $_SESSION['user'] = $user;
+                                        } else {
+                                            setcookie('user', '', time() - 3600, '/');
+                                            setcookie('user', $user, time() + (3600 * 24), '/');
                                         }
+
+                                        header('location: /user/edit/' . $slug);
                                     } else {
                                         $_SESSION['fb'] = 'Error updating.';
-                                        header('location: /user/edit/' . $username);
+                                        header('location: /user/edit/' . $slug);
                                     }
                                 }
                             }
                         } else {
                             $_SESSION['fb'] = $this->auth->fb;
-                            header('location: /user/edit/' . $username);
+                            header('location: /user/edit/' . $slug);
                         }
                     } else {
                         $_SESSION['fb'] = $this->auth->fb;
-                        header('location: /user/edit/' . $username);
+                        header('location: /user/edit/' . $slug);
                     }
                 } else {
                     $_SESSION['fb'] = $this->auth->fb;
-                    header('location: /user/edit/' . $username);
+                    header('location: /user/edit/' . $slug);
                 }
             } else {
-                $this->user['username'] = $username;
+                $this->user['slug'] = $slug;
 
                 $data = $this->model->read($this->user);
 
@@ -348,15 +344,15 @@ class UserController extends Controller
         }
     }
 
-    public function delete(string $username)
+    public function delete(string $slug)
     {
         if (!empty($_SESSION['user']) || !empty($_COOKIE['user'])) {
-            $this->user['username'] = $username;
+            $this->user['slug'] = $slug;
             $data = $this->model->read($this->user);
             $row = $data->fetch_assoc();
 
             if ($this->helper->remove_image($row['avatar'])) {
-                if ($this->model->delete($username)) {
+                if ($this->model->delete($slug)) {
                     $_SESSION['fb'] = 'Account deleted';
                     unset($_SESSION['user']);
                     setcookie('user', '', time() - 3600, '/');

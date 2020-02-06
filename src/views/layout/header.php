@@ -3,7 +3,7 @@
         <?php $user = !empty($_COOKIE['user']) ? unserialize($_COOKIE['user']) : $_SESSION['user']; ?>
         <?php if (isset($user)) : ?>
             <div class="user-pp circular">
-                <a href="/user/edit/<?= $user['username'] ?>" title="<?= $user['name'] ?>">
+                <a href="/user/edit/<?= $user['slug'] ?>" title="<?= $user['name'] ?>">
                     <img src="/images/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>">
                 </a>
             </div>

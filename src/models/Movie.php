@@ -6,10 +6,11 @@ class Movie extends Model
     {
         $cover_image = $movie['cover_image'];
         $name = $movie['name'];
+        $slug = $movie['slug'];
         $genre = $movie['genre'];
         $price = $movie['price'];
 
-        $query = "INSERT INTO `movies`(`cover_image`,`name`,`genre`,`price`) VALUES('$cover_image','$name','$genre','$price')";
+        $query = "INSERT INTO `movies`(`cover_image`,`name`,`slug`,`genre`,`price`) VALUES('$cover_image','$name','$slug','$genre','$price')";
 
         if ($this->sql()->query($query)) {
             $fb = true;
@@ -23,9 +24,9 @@ class Movie extends Model
     public function read(array $movie)
     {
         $id = $movie['id'];
-        $name = $movie['name'];
+        $slug = $movie['slug'];
 
-        $query = "SELECT * FROM `movies` WHERE `id`='$id' OR `name`='$name'";
+        $query = "SELECT * FROM `movies` WHERE `id`='$id' OR `slug`='$slug'";
 
         if ($this->sql()->query($query)) {
             $fb = $this->sql()->query($query);
@@ -41,10 +42,11 @@ class Movie extends Model
         $id = $movie['id'];
         $cover_image = $movie['cover_image'];
         $name = $movie['name'];
+        $slug = $movie['slug'];
         $genre = $movie['genre'];
         $price = $movie['price'];
 
-        $query = "UPDATE `movies` SET `cover_image`='$cover_image',`name`='$name',`genre`='$genre',`price`='$price' WHERE `id`='$id'";
+        $query = "UPDATE `movies` SET `cover_image`='$cover_image',`name`='$name',`slug`='$slug',`genre`='$genre',`price`='$price' WHERE `id`='$id'";
 
         if ($this->sql()->query($query)) {
             $fb = true;
@@ -55,9 +57,9 @@ class Movie extends Model
         return $fb;
     }
 
-    public function delete(int $id)
+    public function delete(string $slug)
     {
-        $query = "DELETE FROM `movies` WHERE `id`='$id'";
+        $query = "DELETE FROM `movies` WHERE `slug`='$slug'";
 
         if ($this->sql()->query($query)) {
             $fb = true;
