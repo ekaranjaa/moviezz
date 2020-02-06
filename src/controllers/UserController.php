@@ -291,24 +291,29 @@ class UserController extends Controller
                                 }
                             } else {
                                 if ($data->num_rows > 0) {
-                                    $this->user['avatar'] = $row['avatar'];
+                                    if ($this->helper->rename_image($row['avatar'], $this->user['slug'])) {
+                                        $this->user['avatar'] = $this->helper->fb;
 
-                                    if ($this->model->edit($this->user)) {
-                                        $_SESSION['fb'] = 'Profile successfully updated';
+                                        if ($this->model->edit($this->user)) {
+                                            $_SESSION['fb'] = 'Profile successfully updated';
 
-                                        $data = $this->model->read($this->user);
+                                            $data = $this->model->read($this->user);
 
-                                        if (!empty($_SESSION['user'])) {
-                                            unset($_SESSION['user']);
-                                            $_SESSION['user'] = $user;
+                                            if (!empty($_SESSION['user'])) {
+                                                unset($_SESSION['user']);
+                                                $_SESSION['user'] = $user;
+                                            } else {
+                                                setcookie('user', '', time() - 3600, '/');
+                                                setcookie('user', $user, time() + (3600 * 24), '/');
+                                            }
+
+                                            header('location: /user/edit/' . $slug);
                                         } else {
-                                            setcookie('user', '', time() - 3600, '/');
-                                            setcookie('user', $user, time() + (3600 * 24), '/');
+                                            $_SESSION['fb'] = 'Error updating.';
+                                            header('location: /user/edit/' . $slug);
                                         }
-
-                                        header('location: /user/edit/' . $slug);
                                     } else {
-                                        $_SESSION['fb'] = 'Error updating.';
+                                        $_SESSION['fb'] = $this->helper->fb;
                                         header('location: /user/edit/' . $slug);
                                     }
                                 }

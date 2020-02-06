@@ -98,25 +98,24 @@ class MovieController extends Controller
                     $data = $this->model->read($this->movie);
                     $row = $data->fetch_assoc();
 
-                    if ($this->movie['slug'] != $row['slug']) {
+                    if (!empty($this->movie['cover_image']['tmp_name'])) {
+                        $this->helper->remove_image($row['cover_image']);
 
-                        if (!empty($this->movie['cover_image']['tmp_name'])) {
-                            $this->helper->remove_image($row['cover_image']);
-
-                            if ($this->helper->upload_image($this->movie['cover_image'], $this->movie['slug'])) {
-                                $this->movie['cover_image'] = $this->helper->fb;
-                                if ($this->model->edit($this->movie)) {
-                                    $_SESSION['fb'] = 'Updated movie successfully';
-                                    header('location: /');
-                                } else {
-                                    $_SESSION['fb'] = 'Error updating.';
-                                    header('location: /movie/edit/' . $id);
-                                }
+                        if ($this->helper->upload_image($this->movie['cover_image'], $this->movie['slug'])) {
+                            $this->movie['cover_image'] = $this->helper->fb;
+                            if ($this->model->edit($this->movie)) {
+                                $_SESSION['fb'] = 'Updated movie successfully';
+                                header('location: /');
                             } else {
-                                $_SESSION['fb'] = 'Error updating profile photo: ' . $this->helper->fb;
+                                $_SESSION['fb'] = 'Error updating.';
+                                header('location: /movie/edit/' . $id);
                             }
                         } else {
-                            $this->movie['cover_image'] = $row['cover_image'];
+                            $_SESSION['fb'] = 'Error updating profile photo: ' . $this->helper->fb;
+                        }
+                    } else {
+                        if ($this->helper->rename_image($row['cover_image'], $this->movie['slug'])) {
+                            $this->movie['cover_image'] = $this->helper->fb;
 
                             if ($this->model->edit($this->movie)) {
                                 $_SESSION['fb'] = 'Updated movie successfully';
@@ -125,10 +124,10 @@ class MovieController extends Controller
                                 $_SESSION['fb'] = 'Error updating.';
                                 header('location: /movie/edit/' . $id);
                             }
+                        } else {
+                            $_SESSION['fb'] = $this->helper->fb;
+                            header('location: /movie/edit/' . $id);
                         }
-                    } else {
-                        $_SESSION['fb'] = $this->movie['name'] . ' already exists';
-                        header('location: /movie/edit/' . $id);
                     }
                 } else {
                     $_SESSION['fb'] = $this->auth->fb;

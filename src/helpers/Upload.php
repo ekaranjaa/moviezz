@@ -58,6 +58,25 @@ class Upload
         return $fb;
     }
 
+    public function rename_image(string $oldname, string $newname)
+    {
+        $array_file_name = explode('.', $oldname);
+        $oldname = $this->path . $oldname;
+        $file_extension = $array_file_name[1];
+        $filename = $newname . '.' . $file_extension;
+        $newname = $this->path . $newname . '.' . $file_extension;
+
+        if (rename($oldname, $newname)) {
+            $fb = true;
+            $this->fb = $filename;
+        } else {
+            $fb = false;
+            $this->fb = 'Error renaming file';
+        }
+
+        return $fb;
+    }
+
     public function remove_image(string $filename)
     {
         $target_file = $this->path . $filename;
