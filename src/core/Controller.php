@@ -2,26 +2,53 @@
 
 class Controller
 {
-    protected function model(string $model)
+    public function userSession()
     {
-        if (file_exists(__DIR__ . '/../models/' . ucwords($model) . '.php')) {
-            require_once __DIR__ . '/../models/' . ucwords($model) . '.php';
+        if (empty($_SESSION['user']) && empty($_COOKIE['user'])) {
+            $fb = false;
         } else {
-            exit('Model doesn\'t exist.');
+            $fb = true;
         }
 
-        return new $model;
+        return $fb;
+    }
+
+    protected function model(string $model)
+    {
+        $model = ucwords($model);
+
+        if (file_exists(__DIR__ . '/../models/' . $model . '.php')) {
+            require_once __DIR__ . '/../models/' . $model . '.php';
+
+            if (class_exists($model)) {
+                $fb = new $model;
+            } else {
+                $fb = 'Class ' . $model . ' doesn\'t exist';
+            }
+        } else {
+            exit('File ' . $model . ' doesn\'t exist.');
+        }
+
+        return $fb;
     }
 
     protected function helper(string $helper)
     {
-        if (file_exists(__DIR__ . '/../helpers/' . ucwords($helper) . '.php')) {
-            require_once __DIR__ . '/../helpers/' .  ucwords($helper) . '.php';
+        $helper = ucwords($helper);
+
+        if (file_exists(__DIR__ . '/../helpers/' . $helper . '.php')) {
+            require_once __DIR__ . '/../helpers/' .  $helper . '.php';
+
+            if (class_exists($helper)) {
+                $fb = new $helper;
+            } else {
+                $fb = 'Class ' . $helper . ' doesn\'t exist';
+            }
         } else {
-            exit('This helper doesn\'t exist');
+            exit('This helper (' . $helper . ') doesn\'t exist');
         }
 
-        return new $helper;
+        return $fb;
     }
 
     protected function view(string $view, array $data = [])

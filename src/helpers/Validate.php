@@ -1,6 +1,6 @@
 <?php
 
-class Auth
+class Validate
 {
     public $fb;
 

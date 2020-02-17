@@ -1,6 +1,6 @@
 <?php
 
-class Upload
+class ImageFileHandler
 {
     private $validtypes;
     private $path = __DIR__ . '/../../public/images/';
@@ -11,7 +11,7 @@ class Upload
         $this->validtypes = ['jpeg', 'png', 'jpg', 'gif'];
     }
 
-    public function upload_image(array $file, string $filename = '')
+    public function uploadImage(array $file, string $filename = '')
     {
         $file_name = $file['name'];
         $array_file_name = explode('.', $file_name);
@@ -58,7 +58,7 @@ class Upload
         return $fb;
     }
 
-    public function rename_image(string $oldname, string $newname)
+    public function renameImage(string $oldname, string $newname)
     {
         $array_file_name = explode('.', $oldname);
         $oldname = $this->path . $oldname;
@@ -77,7 +77,7 @@ class Upload
         return $fb;
     }
 
-    public function remove_image(string $filename)
+    public function removeImage(string $filename)
     {
         $target_file = $this->path . $filename;
 

@@ -4,13 +4,13 @@ class Model
 {
     protected function sql()
     {
-        require_once __DIR__ . '/../config/db.php';
+        require_once __DIR__ . '/../config/Db.php';
 
         $sql = new Db([
             'host' => 'localhost',
             'username' => 'root',
-            'password' => 'root',
-            'database' => 'loginsys'
+            'password' => 'password',
+            'database' => 'moviezzz'
         ]);
 
         return $sql->connect();

@@ -1,87 +1,45 @@
 <?php
 require_once __DIR__ . '/layout/head.php';
-require_once __DIR__ . '/layout/header.php';
 ?>
-<div class="content">
-    <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
-        <div class="notification is-info">
-            <strong>
-                <?= $_SESSION['fb'];
-                unset($_SESSION['fb']); ?>
-            </strong>
-        </div>
-    <?php endif; ?>
-    <div class="columns">
-        <?php if (isset($user)) : ?>
-            <div class="column is-3">
-                <?php
-                if (!empty($data['id'])) {
-                    $action = '/movie/edit/' . $data['id'];
-                    $btntext = 'Update';
-                } else {
-                    $action = '/movie/add';
-                    $btntext = 'Add';
-                }
-                ?>
-                <?php $form_input = !empty($_SESSION['form_input']) ? $_SESSION['form_input'] : ''; ?>
-                <form action="<?= $action ?>" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="<?= !empty($data['id']) ? $data['id'] : '' ?>">
-                    <div class="control field">
-                        <input class="input" type="file" name="cover_image" value="<?= !empty($data['image']) ? $data['image'] : '' ?>">
+<div class="row">
+    <?php if (!empty($data)) : ?>
+        <?php foreach ($data as $movie) : ?>
+            <?php
+            $time = explode(' ', $movie['created_at']);
+            ?>
+
+            <div class="col s4">
+                <div class="card rounded">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="/images/<?= $movie['cover_image'] ?>" alt="<?= $movie['name'] ?>">
                     </div>
-                    <div class="control field">
-                        <input class="input" type="text" name="name" value="<?= !empty($data['name']) ? $data['name'] : $form_input['name'] ?>" placeholder="Name" autofocus>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4"><?= $movie['name'] ?><i class="material-icons right">more_vert</i></span>
+                        <span><?= $time[0] ?></span>
+                        <b class="right red-text">Ksh. <?= $movie['price'] ?></b>
                     </div>
-                    <div class="control field">
-                        <input class="input" type="text" name="genre" value="<?= !empty($data['genre']) ? $data['genre'] : $form_input['genre'] ?>" placeholder="Genre">
-                    </div>
-                    <div class="control field">
-                        <input class="input" type="number" name="price" value="<?= !empty($data['price']) ? $data['price'] : $form_input['price'] ?>" placeholder="Price">
-                    </div>
-                    <div class="control field">
-                        <div class="has-text-centered">
-                            <button class="button is-info"><?= $btntext ?></button>
+                    <?php if ($user) : ?>
+                        <div class="card-action sticky-action">
+                            <a href="/movie/edit/<?= $movie['id'] ?>" class="waves-effect waves-ripple teal-text"><i class="material-icons">edit</i></a>
+                            <a href="/movie/delete/<?= $movie['slug'] ?>" class="waves-effect waves-ripple teal-text"><i class="material-icons">delete</i></a>
                         </div>
+                    <?php endif; ?>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"><?= $movie['name'] ?><i class="material-icons right">close</i></span>
+                        <p><b>Time:</b> <?= $time[0] ?></p>
+                        <p><b>Type:</b> <?= $movie['type'] ?></p>
+                        <p><b>Price:</b> <?= $movie['price'] ?></p>
+                        <h6>Description</h6>
+                        <div class="divider"></div>
+                        <p><?= $movie['description'] ?></p>
                     </div>
-                </form>
-                <?php unset($_SESSION['form_input']); ?>
+                </div>
             </div>
-        <?php endif; ?>
-        <?php if (!isset($data['id'])) : ?>
-            <div class="column">
-                <table class="table is-bordered is-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Genre</th>
-                            <th>Price</th>
-                            <th>Date produced</th>
-                            <th>Controlls</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($data as $movie) : ?>
-                            <tr>
-                                <td><?= $movie['name'] ?></td>
-                                <td><?= $movie['genre'] ?></td>
-                                <td><?= $movie['price'] ?></td>
-                                <td><?= $movie['created_at'] ?></td>
-                                <td>
-                                    <?php if (isset($user)) : ?>
-                                        <a class="button is-info is-small" href="/movie/edit/<?= $movie['id'] ?>"><i class="far fa-edit"></i></a>
-                                        <a class="button is-danger is-small" href="/movie/delete/<?= $movie['slug'] ?>"><i class="far fa-trash-alt"></i></a>
-                                    <?php endif; ?>
-                                    <a class="button is-warning is-small" href="/movie/display/<?= $movie['slug'] ?>"><i class="far fa-eye"></i></a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        <?php endif; ?>
-    </div>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <h3>No movies available</h3>
+    <?php endif; ?>
 </div>
 <?php
-require_once __DIR__ . '/layout/footer.php';
 require_once __DIR__ . '/layout/foo.php';
 ?>

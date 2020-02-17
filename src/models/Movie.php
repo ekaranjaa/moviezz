@@ -7,10 +7,11 @@ class Movie extends Model
         $cover_image = $movie['cover_image'];
         $name = $movie['name'];
         $slug = $movie['slug'];
-        $genre = $movie['genre'];
+        $type = $movie['type'];
         $price = $movie['price'];
+        $description = $movie['description'];
 
-        $query = "INSERT INTO `movies`(`cover_image`,`name`,`slug`,`genre`,`price`) VALUES('$cover_image','$name','$slug','$genre','$price')";
+        $query = "INSERT INTO `movies`(`cover_image`,`name`,`slug`,`type`,`price`,`description`) VALUES('$cover_image','$name','$slug','$type','$price','$description')";
 
         if ($this->sql()->query($query)) {
             $fb = true;
@@ -43,10 +44,11 @@ class Movie extends Model
         $cover_image = $movie['cover_image'];
         $name = $movie['name'];
         $slug = $movie['slug'];
-        $genre = $movie['genre'];
+        $type = $movie['type'];
         $price = $movie['price'];
+        $description = $movie['description'];
 
-        $query = "UPDATE `movies` SET `cover_image`='$cover_image',`name`='$name',`slug`='$slug',`genre`='$genre',`price`='$price' WHERE `id`='$id'";
+        $query = "UPDATE `movies` SET `cover_image`='$cover_image',`name`='$name',`slug`='$slug',`type`='$type',`price`='$price', `description`='$description' WHERE `id`='$id'";
 
         if ($this->sql()->query($query)) {
             $fb = true;
