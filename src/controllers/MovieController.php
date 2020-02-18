@@ -86,8 +86,6 @@ class MovieController extends Controller
                     if ($data->num_rows > 0) {
                         while ($row = $data->fetch_assoc()) {
                             if (!empty($this->movie['cover_image']['tmp_name'])) {
-                                $this->imgHelper->removeImage($row['cover_image']);
-
                                 if ($this->imgHelper->uploadImage($this->movie['cover_image'], $this->movie['slug'])) {
                                     $this->movie['cover_image'] = $this->imgHelper->fb;
                                     if ($this->model->edit($this->movie)) {
@@ -133,7 +131,7 @@ class MovieController extends Controller
                     }
                 }
 
-                $this->view('home', $fb);
+                $this->view('edit', $fb);
             }
         } else {
             $_SESSION['fb'] = 'You need to be logged in to perform this action';

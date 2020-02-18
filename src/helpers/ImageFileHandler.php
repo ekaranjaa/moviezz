@@ -25,30 +25,30 @@ class ImageFileHandler
 
         if (getimagesize($file['tmp_name'])) {
             if (file_exists($target_file)) {
-                $this->fb = 'File already exists';
-            } else {
-                if (in_array($file_type, $this->validtypes)) {
-                    if ($size > 5000000) {
-                        $this->fb = 'File size is too large';
+                $this->removeImage($this->path . $target_file);
+            }
+
+            if (in_array($file_type, $this->validtypes)) {
+                if ($size > 2000000) {
+                    $this->fb = 'File size is too large';
+                    $fb = false;
+                } else {
+                    if (!empty($file_error)) {
+                        $this->fb = 'An error occured while uploading the file';
                         $fb = false;
                     } else {
-                        if (!empty($file_error)) {
-                            $this->fb = 'An error occured while uploading the file';
-                            $fb = false;
+                        if (move_uploaded_file($file['tmp_name'], $target_file)) {
+                            $this->fb = $file_name;
+                            $fb = true;
                         } else {
-                            if (move_uploaded_file($file['tmp_name'], $target_file)) {
-                                $this->fb = $file_name;
-                                $fb = true;
-                            } else {
-                                $this->fb = 'Error uploading file';
-                                $fb = false;
-                            }
+                            $this->fb = 'Error uploading file';
+                            $fb = false;
                         }
                     }
-                } else {
-                    $this->fb = 'Make sure the file type is one of ' . implode(',', $this->validtypes);
-                    $fb = false;
                 }
+            } else {
+                $this->fb = 'Make sure the file type is one of ' . implode(',', $this->validtypes);
+                $fb = false;
             }
         } else {
             $this->fb = 'Oops! Looks like the file is not a valid image';

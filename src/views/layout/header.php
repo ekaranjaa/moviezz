@@ -4,26 +4,46 @@
             <a class="brand-logo" href="/">Moviezzz</a>
             <ul class="right hide-on-med-and-down">
                 <?php if (!$user) : ?>
-                    <li><a class="waves-effect waves-light btn modal-trigger" href="#login">Login</a></li>
+                    <li><a class="waves-effect waves-light btn modal-trigger" href="#authForm">Login</a></li>
                 <?php else : ?>
-                    <li class="dropdown-trigger">
-                        <a class="user-profile dropdown-trigger">
+                    <li>
+                        <a class="user-profile dropdown-trigger" data-target="userProfile">
                             <div class="profile-image">
                                 <img src="/images/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>">
                             </div>
                             <span><?= $user['username'] ?></span>
                         </a>
-                        <ul class="dropdown-content">
-                            <li><a href="/user/profile/<?= $user['slug'] ?>">Profile</a></li>
-                            <li><a href="/user/logout<?= $user['slug'] ?>">Logout</a></li>
+                        <ul id="userProfile" class="dropdown-content">
+                            <li><a href="/user/edit/<?= $user['username'] ?>">Profile</a></li>
+                            <li><a href="/user/logout">Logout</a></li>
                         </ul>
                     </li>
                 <?php endif; ?>
             </ul>
         </div>
+
+        <?php
+        $url = $_SERVER['REQUEST_URI'];
+        $bcs = [];
+
+        if (!empty($url)) {
+            $bcs = explode('/', substr($url, 1));
+        }
+        ?>
+
         <div class="nav-wrapper s-container">
             <div class="col s12">
                 <a href="/" class="breadcrumb">Home</a>
+                <?php if (!empty($bcs[0])) : ?>
+                    <a href="/<?= $bcs[0] ?>" class="breadcrumb"><?= $bcs[0] ?></a>
+                    <a href="/<?= $bcs[0] . '/' . $bcs[1] ?>" class="breadcrumb"><?= $bcs[1] ?></a>
+                    <?php if (!empty($bcs[2])) : ?>
+                        <a href="/<?= $bcs[0] . '/' . $bcs[1] . '/' . $bcs[2] ?>" class="breadcrumb"><?= $bcs[2] ?></a>
+                <?php
+                    endif;
+                endif;
+                ?>
+
                 <?php if ($user) : ?>
                     <a href="#addMovie" class="btn-floating btn-large halfway-fab waves-effect waves-light teal modal-trigger">
                         <i class="material-icons">add</i>
@@ -35,7 +55,7 @@
 </nav>
 
 <!-- Login / Signup modal -->
-<div id="login" class="modal">
+<div id="authForm" class="modal">
     <div class="modal-content">
         <a class="modal-close waves-effect waves-light btn-flat right"><i class="material-icons">close</i></a>
         <div class="row">

@@ -16,7 +16,7 @@ class Movie extends Model
         if ($this->sql()->query($query)) {
             $fb = true;
         } else {
-            error_log($this->sql()->errno . ': ' . $this->sql()->error, 3, __DIR__ . '/../logs/error.log');
+            error_log($this->sql()->errno . ': ' . $this->sql()->error, 3, __DIR__ . '/../logs/errors.log');
         }
 
         return $fb;
@@ -32,7 +32,7 @@ class Movie extends Model
         if ($this->sql()->query($query)) {
             $fb = $this->sql()->query($query);
         } else {
-            error_log($this->sql()->errno . ': ' . $this->sql()->error, 3, __DIR__ . '/../logs/error.log');
+            error_log($this->sql()->errno . ': ' . $this->sql()->error, 3, __DIR__ . '/../logs/errors.log');
         }
 
         return $fb;
@@ -53,7 +53,7 @@ class Movie extends Model
         if ($this->sql()->query($query)) {
             $fb = true;
         } else {
-            error_log($this->sql()->errno . ': ' . $this->sql()->error, 3, __DIR__ . '/../logs/error.log');
+            error_log($this->sql()->errno . ': ' . $this->sql()->error, 3, __DIR__ . '/../logs/errors.log');
         }
 
         return $fb;
