@@ -18,4 +18,4 @@
         </div>
     </div>
 </form>
-<?php require_once __DIR__ . '/../layout/foo.php'; ?>
+<?php require_once __DIR__ . '/layout/foo.php'; ?>

@@ -9,7 +9,7 @@ class Model
         $sql = new Db([
             'host' => 'localhost',
             'username' => 'root',
-            'password' => 'password',
+            'password' => 'root',
             'database' => 'moviezzz'
         ]);
 

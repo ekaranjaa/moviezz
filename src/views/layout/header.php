@@ -35,10 +35,10 @@
             <div class="col s12">
                 <a href="/" class="breadcrumb">Home</a>
                 <?php if (!empty($bcs[0])) : ?>
-                    <a href="/<?= $bcs[0] ?>" class="breadcrumb"><?= $bcs[0] ?></a>
-                    <a href="/<?= $bcs[0] . '/' . $bcs[1] ?>" class="breadcrumb"><?= $bcs[1] ?></a>
+                    <a href="/<?= $bcs[0] ?>" class="breadcrumb"><?= ucfirst($bcs[0]) ?></a>
+                    <a href="/<?= $bcs[0] . '/' . $bcs[1] ?>" class="breadcrumb"><?= ucfirst($bcs[1]) ?></a>
                     <?php if (!empty($bcs[2])) : ?>
-                        <a href="/<?= $bcs[0] . '/' . $bcs[1] . '/' . $bcs[2] ?>" class="breadcrumb"><?= $bcs[2] ?></a>
+                        <a href="/<?= $bcs[0] . '/' . $bcs[1] . '/' . $bcs[2] ?>" class="breadcrumb"><?= ucfirst($bcs[2]) ?></a>
                 <?php
                     endif;
                 endif;
