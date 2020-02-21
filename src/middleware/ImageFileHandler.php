@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Middleware\ImageFileHandler;
+
 class ImageFileHandler
 {
     private $validtypes;

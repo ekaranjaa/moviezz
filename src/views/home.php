@@ -7,7 +7,7 @@
             ?>
 
             <div class="col s4">
-                <div class="card rounded">
+                <div class="card">
                     <div class="card-image waves-effect waves-block waves-light">
                         <img class="activator" src="/images/<?= $movie['cover_image'] ?>" alt="<?= $movie['name'] ?>">
                     </div>

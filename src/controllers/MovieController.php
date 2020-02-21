@@ -1,5 +1,7 @@
 <?php
 
+use App\Middleware\ImageFileHandler\ImageFileHandler;
+
 class MovieController extends Controller
 {
     private $model;
@@ -11,7 +13,7 @@ class MovieController extends Controller
     {
         $this->model = $this->model('movie');
         $this->validate = $this->helper('validate');
-        $this->imgHelper = $this->helper('ImageFileHandler');
+        $this->imgHelper = new ImageFileHandler();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->movie = [
