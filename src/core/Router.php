@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Router;
+
 use App\Interfaces\RouterInterface\RouterInterface;
 
 class Router implements RouterInterface
@@ -12,7 +14,7 @@ class Router implements RouterInterface
         $this->uri = $_SERVER['REQUEST_URI'];
     }
 
-    public function get(string $path, string $object = null, $callback = null)
+    public function get(string $path, string $object = null, object $callback = null)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $fb = $this->action($path, $object, $callback);
@@ -21,7 +23,7 @@ class Router implements RouterInterface
         return $fb;
     }
 
-    public function post(string $path, string $object = null, $callback = null)
+    public function post(string $path, string $object = null, object $callback = null)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $fb = $this->action($path, $object, $callback);
@@ -30,7 +32,7 @@ class Router implements RouterInterface
         return $fb;
     }
 
-    public function action(string $path, string $object = null, $callback = null)
+    public function action(string $path, string $object = null, object $callback = null)
     {
         if ($path === $this->uri) {
             if (!empty($object)) {
@@ -59,7 +61,7 @@ class Router implements RouterInterface
         if (class_exists($class)) {
             if (method_exists($class, $method)) {
                 $instance = new $class;
-                $fb = $instance::$method;
+                $fb = $instance->$method;
             }
         }
 

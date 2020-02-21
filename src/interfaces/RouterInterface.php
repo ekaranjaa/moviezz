@@ -4,9 +4,9 @@ namespace App\Interfaces\RouterInterface;
 
 interface RouterInterface
 {
-    public function get(string $path, object $class = null);
+    public function get(string $path, string $object = null, object $callback);
 
-    public function post(string $path, object $class = null);
+    public function post(string $path, string $object = null, object $callback);
 
     public function getObject(string $object);
 
