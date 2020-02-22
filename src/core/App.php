@@ -8,9 +8,9 @@ class App
 
     public function __construct()
     {
-        $url = $this->parseUrl();
+        $url = $this->getUri();
 
-        if (isset($url[0]) && !empty($url[0])) {
+        if (!empty($url[0])) {
             $this->controller = $url[0];
             unset($url[0]);
         }
@@ -21,7 +21,7 @@ class App
             require_once __DIR__ . '/../controllers/' . $this->controller . '.php';
 
             if (class_exists($this->controller)) {
-                if (isset($url[1]) && !empty($url[1])) {
+                if (!empty($url[1])) {
                     if (method_exists($this->controller, $url[1])) {
                         $this->method = $url[1];
                         unset($url[1]);
@@ -43,7 +43,11 @@ class App
         }
     }
 
-    public function parseUrl()
+
+    /**
+     * Get the URI passed by the user
+     */
+    public function getUri()
     {
 
         $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';

@@ -1,6 +1,6 @@
 <?php
 
-class Validate
+class ValidateMiddleware extends Middleware
 {
     public $fb;
 

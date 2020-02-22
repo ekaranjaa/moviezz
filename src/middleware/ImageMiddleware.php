@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Middleware\ImageFileHandler;
-
-class ImageFileHandler
+class ImageMiddleware extends Middleware
 {
     private $validtypes;
     private $path = __DIR__ . '/../../public/images/';

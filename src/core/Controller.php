@@ -4,11 +4,7 @@ class Controller
 {
     public function userSession()
     {
-        if (empty($_SESSION['user']) && empty($_COOKIE['user'])) {
-            $fb = false;
-        } else {
-            $fb = true;
-        }
+        $fb = $this->middleware('session');
 
         return $fb;
     }
@@ -32,20 +28,20 @@ class Controller
         return $fb;
     }
 
-    protected function helper(string $helper)
+    protected function middleware(string $middleware)
     {
-        $helper = ucwords($helper);
+        $middleware = ucwords($middleware) . 'Middleware';
 
-        if (file_exists(__DIR__ . '/../helpers/' . $helper . '.php')) {
-            require_once __DIR__ . '/../helpers/' .  $helper . '.php';
+        if (file_exists(__DIR__ . '/../middleware/' . $middleware . '.php')) {
+            require_once __DIR__ . '/../middleware/' .  $middleware . '.php';
 
-            if (class_exists($helper)) {
-                $fb = new $helper;
+            if (class_exists($middleware)) {
+                $fb = new $middleware;
             } else {
-                $fb = 'Class ' . $helper . ' doesn\'t exist';
+                $fb = 'Class ' . $middleware . ' doesn\'t exist';
             }
         } else {
-            exit('This helper (' . $helper . ') doesn\'t exist');
+            exit('This middleware (' . $middleware . ') doesn\'t exist');
         }
 
         return $fb;
