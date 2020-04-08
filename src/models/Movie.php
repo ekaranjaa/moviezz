@@ -4,6 +4,7 @@ class Movie extends Model
 {
     public function create(array $movie)
     {
+        $user_id = $movie['user_id'];
         $cover_image = $movie['cover_image'];
         $name = $movie['name'];
         $slug = $movie['slug'];
@@ -11,7 +12,7 @@ class Movie extends Model
         $price = $movie['price'];
         $description = $movie['description'];
 
-        $query = "INSERT INTO `movies`(`cover_image`,`name`,`slug`,`type`,`price`,`description`) VALUES('$cover_image','$name','$slug','$type','$price','$description')";
+        $query = "INSERT INTO `movies`(`user_id`,`cover_image`,`name`,`slug`,`type`,`price`,`description`) VALUES('$user_id','$cover_image','$name','$slug','$type','$price','$description')";
 
         if ($this->sql()->query($query)) {
             $fb = true;

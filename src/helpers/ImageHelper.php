@@ -1,14 +1,15 @@
 <?php
 
-class ImageMiddleware extends Middleware
+class ImageHelper extends Helper
 {
     private $validtypes;
-    private $path = __DIR__ . '/../../public/images/';
+    private $path;
     public $fb;
 
-    public function __construct()
+    public function __construct($destination)
     {
         $this->validtypes = ['jpeg', 'png', 'jpg', 'gif'];
+        $this->path = __DIR__ . '/../../public/images/' . $destination . '/';
     }
 
     public function uploadImage(array $file, string $filename = '')

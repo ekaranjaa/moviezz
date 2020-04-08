@@ -5,7 +5,7 @@ class UserController extends Controller
     private $model;
     private $user;
     private $validate;
-    private $imgMiddleware;
+    private $imgHelper;
 
 
     /**
@@ -14,8 +14,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->model = $this->model('user');
-        $this->validate = $this->middleware('validate');
-        $this->imgMiddleware = $this->middleware('image');
+        $this->validate = $this->helper('validate');
+        $this->imgHelper = $this->helper('image', 'users');
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->user = [
@@ -234,8 +234,8 @@ class UserController extends Controller
                             }
                         }
                     } else {
-                        if ($this->imgMiddleware->uploadImage($this->user['avatar'], $this->user['username'])) {
-                            $this->user['avatar'] = $this->imgMiddleware->fb;
+                        if ($this->imgHelper->uploadImage($this->user['avatar'], $this->user['username'])) {
+                            $this->user['avatar'] = $this->imgHelper->fb;
 
                             if ($this->model->create($this->user)) {
                                 $_SESSION['fb'] = 'Successfully registered';
@@ -261,7 +261,7 @@ class UserController extends Controller
                             }
                         } else {
                             $_SESSION['form_input'] = $this->user;
-                            $_SESSION['fb'] = 'Error uploading image: ' . $this->imgMiddleware->fb;
+                            $_SESSION['fb'] = 'Error uploading image: ' . $this->imgHelper->fb;
                             header('location: /');
                         }
                     }
@@ -326,8 +326,8 @@ class UserController extends Controller
                     if ($data->num_rows > 0) {
                         while ($row = $data->fetch_assoc()) {
                             if (!empty($this->user['avatar']['tmp_name'])) {
-                                if ($this->imgMiddleware->uploadImage($this->user['avatar'], $this->user['username'])) {
-                                    $this->user['avatar'] = $this->imgMiddleware->fb;
+                                if ($this->imgHelper->uploadImage($this->user['avatar'], $this->user['username'])) {
+                                    $this->user['avatar'] = $this->imgHelper->fb;
 
                                     if ($this->model->edit($this->user)) {
                                         $_SESSION['fb'] = 'Profile successfully updated';
@@ -347,11 +347,11 @@ class UserController extends Controller
                                     }
                                 } else {
                                     $_SESSION['form_input'] = $this->user;
-                                    $_SESSION['fb'] = 'Error updating profile photo: ' . $this->imgMiddleware->fb;
+                                    $_SESSION['fb'] = 'Error updating profile photo: ' . $this->imgHelper->fb;
                                 }
                             } else {
-                                if ($this->imgMiddleware->renameImage($row['avatar'], $this->user['username'])) {
-                                    $this->user['avatar'] = $this->imgMiddleware->fb;
+                                if ($this->imgHelper->renameImage($row['avatar'], $this->user['username'])) {
+                                    $this->user['avatar'] = $this->imgHelper->fb;
 
                                     if ($this->model->edit($this->user)) {
                                         $_SESSION['fb'] = 'Profile successfully updated';
@@ -372,7 +372,7 @@ class UserController extends Controller
                                         header('location: /user/edit/' . $username);
                                     }
                                 } else {
-                                    $_SESSION['fb'] = $this->imgMiddleware->fb;
+                                    $_SESSION['fb'] = $this->imgHelper->fb;
                                     header('location: /user/edit/' . $username);
                                 }
                             }
@@ -399,7 +399,7 @@ class UserController extends Controller
 
         if ($data->num_rows > 0) {
             while ($row = $data->fetch_assoc()) {
-                if ($this->imgMiddleware->removeImage($row['avatar'])) {
+                if ($this->imgHelper->removeImage($row['avatar'])) {
                     if ($this->model->delete($username)) {
                         $_SESSION['fb'] = 'Account deleted';
                         unset($_SESSION['user']);
@@ -410,7 +410,7 @@ class UserController extends Controller
                         header('location: /');
                     }
                 } else {
-                    $_SESSION['fb'] = 'Error deleting avatar: ' . $this->imgMiddleware->fb;
+                    $_SESSION['fb'] = 'Error deleting avatar: ' . $this->imgHelper->fb;
                     header('location: /');
                 }
             }

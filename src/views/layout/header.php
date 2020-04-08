@@ -1,15 +1,15 @@
 <nav class="navbar-fixed">
     <nav class="nav-extended">
         <div class="nav-wrapper s-container">
-            <a class="brand-logo" href="/">Moviezzz</a>
+            <a class="brand-logo" href="/">moviezz</a>
             <ul class="right hide-on-med-and-down">
                 <?php if (!$user) : ?>
-                    <li><a class="waves-effect waves-light btn modal-trigger" href="#authForm">Login</a></li>
+                    <li><a class="waves-effect waves-light btn modal-trigger" href="#authForm">LOGIN</a></li>
                 <?php else : ?>
                     <li>
                         <a class="user-profile dropdown-trigger" data-target="userProfile">
                             <div class="profile-image">
-                                <img src="/images/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>">
+                                <img src="/images/users/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>">
                             </div>
                             <span><?= $user['username'] ?></span>
                         </a>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div id="signup" class="col s12">
-                <form action="/user/signup" method="POST" enctype="multipart/form-data">
+                <form action="/user/register" method="POST" enctype="multipart/form-data">
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="name" type="text" name="name" class="validate" value="<?= $return_data['name'] ?>">

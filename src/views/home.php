@@ -5,11 +5,10 @@
             <?php
             $time = explode(' ', $movie['created_at']);
             ?>
-
             <div class="col s4">
                 <div class="card">
                     <div class="card-image waves-effect waves-block waves-light">
-                        <img class="activator" src="/images/<?= $movie['cover_image'] ?>" alt="<?= $movie['name'] ?>">
+                        <img class="activator" src="/images/thumbnails/<?= $movie['cover_image'] ?>" alt="<?= $movie['name'] ?>">
                     </div>
                     <div class="card-content">
                         <span class="card-title activator grey-text text-darken-4"><?= $movie['name'] ?><i class="material-icons right">more_vert</i></span>
@@ -35,7 +34,11 @@
             </div>
         <?php endforeach; ?>
     <?php else : ?>
-        <h3>No movies available</h3>
+        <?php if ($user) : ?>
+            <h3>Looks like you've not added any movies yet</h3>
+        <?php else : ?>
+            <h3>No movies available</h3>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 <?php require_once __DIR__ . '/layout/foo.php'; ?>

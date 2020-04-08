@@ -10,7 +10,7 @@ class Model
             'host' => 'localhost',
             'username' => 'root',
             'password' => 'password',
-            'database' => 'moviezzz'
+            'database' => 'moviezz'
         ]);
 
         return $sql->connect();

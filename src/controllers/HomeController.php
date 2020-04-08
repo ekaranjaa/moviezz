@@ -11,7 +11,10 @@ class HomeController extends Controller
 
     public function index()
     {
-        $data = $this->model->read();
+        $user = $_SESSION['user'];
+        $user_id = $user['id'] > 0 ? $user['id'] : 0;
+
+        $data = $this->model->read($user_id);
 
         if ($data->num_rows > 0) {
             while ($row = $data->fetch_assoc()) {

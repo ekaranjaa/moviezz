@@ -2,9 +2,13 @@
 
 class Home extends Model
 {
-    public function read()
+    public function read(int $user_id)
     {
-        $query = "SELECT * FROM `movies` ORDER BY `created_at` DESC";
+        if ($user_id > 0) {
+            $query = "SELECT * FROM `movies` WHERE `user_id`='$user_id' ORDER BY `created_at` DESC";
+        } else {
+            $query = "SELECT * FROM `movies` ORDER BY `created_at` DESC";
+        }
 
         if ($this->sql()->query($query)) {
             $fb = $this->sql()->query($query);

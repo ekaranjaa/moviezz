@@ -1,6 +1,6 @@
 <?php
 
-class SessionMiddleware extends Middleware
+class SessionHelper extends Helper
 {
     public function __construct()
     {

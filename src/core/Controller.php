@@ -4,7 +4,7 @@ class Controller
 {
     public function userSession()
     {
-        $fb = $this->middleware('session');
+        $fb = $this->helper('session');
 
         return $fb;
     }
@@ -28,20 +28,20 @@ class Controller
         return $fb;
     }
 
-    protected function middleware(string $middleware)
+    protected function helper(string $helper, string $destination = '')
     {
-        $middleware = ucwords($middleware) . 'Middleware';
+        $helper = ucwords($helper) . 'Helper';
 
-        if (file_exists(__DIR__ . '/../middleware/' . $middleware . '.php')) {
-            require_once __DIR__ . '/../middleware/' .  $middleware . '.php';
+        if (file_exists(__DIR__ . '/../helpers/' . $helper . '.php')) {
+            require_once __DIR__ . '/../helpers/' .  $helper . '.php';
 
-            if (class_exists($middleware)) {
-                $fb = new $middleware;
+            if (class_exists($helper)) {
+                $fb = new $helper($destination);
             } else {
-                $fb = 'Class ' . $middleware . ' doesn\'t exist';
+                $fb = 'Class ' . $helper . ' doesn\'t exist';
             }
         } else {
-            exit('This middleware (' . $middleware . ') doesn\'t exist');
+            exit('This helper (' . $helper . ') doesn\'t exist');
         }
 
         return $fb;
