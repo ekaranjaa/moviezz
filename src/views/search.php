@@ -31,10 +31,6 @@
         <?php endforeach; ?>
     </div>
 <?php else : ?>
-    <?php if ($user) : ?>
-        <h3 class="font-semibold text-3xl text-gray-700">Looks like you've not added any movies yet</h3>
-    <?php else : ?>
-        <h3 class="font-semibold text-3xl text-gray-700">No movies available</h3>
-    <?php endif; ?>
+    <h3 class="font-semibold text-3xl text-gray-700">No movies were found.</h3>
 <?php endif; ?>
 <?php require_once __DIR__ . '/layout/foo.php'; ?>

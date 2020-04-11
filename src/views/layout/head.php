@@ -14,31 +14,15 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/css/materialize.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-
-    <script src="/js/materialize.min.js"></script>
+    <script src="https://kit.fontawesome.com/885fbd8d84.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/tailwind.css">
 </head>
 
-<body>
+<body class="bg-gray-900">
 
-    <div class="p-container">
+    <?php
+    $user = isset($_SESSION['user']) && !empty($_SESSION['user']) ? $_SESSION['user'] : unserialize($_COOKIE['user']);
+    $return_data = isset($_SESSION['form_input']) && !empty($_SESSION['form_input']) ? $_SESSION['form_input'] : '';
+    ?>
 
-        <?php
-        $user = isset($_SESSION['user']) && !empty($_SESSION['user']) ? $_SESSION['user'] : unserialize($_COOKIE['user']);
-        $return_data = isset($_SESSION['form_input']) && !empty($_SESSION['form_input']) ? $_SESSION['form_input'] : '';
-        ?>
-
-        <?php require_once __DIR__ . '/header.php'; ?>
-
-        <div class="s-container content-wrapper">
-
-            <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
-                <script>
-                    M.toast({
-                        html: `<?= $_SESSION['fb'] ?>`
-                    })
-                </script>
-                <?php unset($_SESSION['fb']); ?>
-            <?php endif; ?>
+    <?php require_once __DIR__ . '/header.php'; ?>

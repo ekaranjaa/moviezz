@@ -11,7 +11,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $user = $_SESSION['user'];
+        $user = isset($_SESSION['user']) ? $_SESSION['user'] : unserialize($_COOKIE['user']);
         $user_id = $user['id'] > 0 ? $user['id'] : 0;
 
         $data = $this->model->read($user_id);

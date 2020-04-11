@@ -15,7 +15,7 @@ class App
             unset($url[0]);
         }
 
-        $this->controller = ucwords($this->controller) . 'Controller';
+        $this->controller = ucfirst($this->controller) . 'Controller';
 
         if (file_exists(__DIR__ . '/../controllers/' . $this->controller . '.php')) {
             require_once __DIR__ . '/../controllers/' . $this->controller . '.php';

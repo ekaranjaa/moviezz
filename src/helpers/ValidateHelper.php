@@ -7,7 +7,7 @@ class ValidateHelper extends Helper
     public function fields(array $fields)
     {
         foreach ($fields as $field => $value) {
-            if (isset($field) && !empty($value)) {
+            if (isset($field)) {
                 $fb = true;
             } else {
                 $fb = false;

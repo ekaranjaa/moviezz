@@ -1,0 +1,201 @@
+@tailwind base;
+
+@tailwind components;
+
+/* Common */
+
+body {
+  @apply text-gray-300;
+}
+
+hr {
+  @apply border-gray-600;
+}
+
+img {
+  @apply w-full object-cover;
+}
+
+.modal {
+  @apply w-9/12 absolute bg-gray-800 rounded z-20 shadow-xl;
+}
+
+.modal {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@screen md {
+  .modal {
+    @apply w-auto;
+  }
+}
+
+/* Logo */
+.logo {
+  @apply font-semibold text-2xl text-red-500;
+}
+
+/* Buttons */
+
+.btn {
+  @apply py-2 px-4 block text-white text-center text-sm appearance-none cursor-pointer rounded transition duration-75 ease-in-out;
+}
+
+.btn:active,
+.btn:focus {
+  @apply outline-none shadow-outline;
+}
+
+.btn:disabled {
+  @apply opacity-50 bg-gray-500 cursor-default;
+}
+
+.btn:disabled:hover {
+  @apply bg-gray-500;
+}
+
+.btn-sm {
+  @apply py-2 px-4 text-xs border-none;
+}
+
+.btn-icon {
+  @apply flex items-center;
+}
+
+.btn-icon span {
+  @apply mx-auto;
+}
+
+.btn-text {
+  @apply text-gray-500 rounded;
+}
+
+.btn-text:hover {
+  @apply bg-gray-700;
+}
+
+.btn-neutral {
+  @apply bg-gray-600;
+}
+
+.btn-neutral:hover {
+  @apply bg-gray-700;
+}
+
+.btn-primary {
+  @apply bg-red-500;
+}
+
+.btn-primary.btn-outline {
+  @apply text-red-500 border-red-500;
+}
+
+.btn-primary:hover {
+  @apply text-white bg-red-600;
+}
+
+.btn-secondary {
+  @apply bg-orange-500;
+}
+
+.btn-secondary.btn-outline {
+  @apply text-orange-500 border-orange-500;
+}
+
+.btn-secondary:hover {
+  @apply text-white bg-orange-600;
+}
+
+.btn-dark {
+  @apply bg-gray-700;
+}
+
+.btn-dark.btn-outline {
+  @apply text-gray-700 border-gray-700;
+}
+
+.btn-dark:hover {
+  @apply text-white bg-gray-800;
+}
+
+.btn-info {
+  @apply bg-blue-500;
+}
+
+.btn-info.btn-outline {
+  @apply text-blue-500 border-blue-500;
+}
+
+.btn-info:hover {
+  @apply text-white bg-blue-600;
+}
+
+.btn-success {
+  @apply bg-green-500;
+}
+
+.btn-success.btn-outline {
+  @apply text-green-500 border-green-500;
+}
+
+.btn-success:hover {
+  @apply text-white bg-green-600;
+}
+
+.btn-warning {
+  @apply bg-orange-700;
+}
+
+.btn-warning.btn-outline {
+  @apply text-orange-700 border-orange-700;
+}
+
+.btn-warning:hover {
+  @apply text-white bg-orange-800;
+}
+
+.btn-danger {
+  @apply bg-red-500;
+}
+
+.btn-danger.btn-outline {
+  @apply text-red-500 border-red-500;
+}
+
+.btn-danger:hover {
+  @apply text-white bg-red-600;
+}
+
+.btn-outline {
+  @apply border-2 bg-transparent;
+}
+
+/* Forms */
+
+.form {
+  @apply mx-auto p-8 max-w-2xl;
+}
+
+.input {
+  @apply appearance-none py-2 px-4 block w-full rounded bg-gray-800 border-2 border-gray-700 transition duration-150 ease-in-out;
+}
+
+.input:focus {
+  @apply outline-none shadow-outline;
+}
+
+.input-group {
+  @apply my-5 flex items-center justify-start;
+}
+
+@screen md {
+  .input-group {
+    @apply flex;
+  }
+}
+
+/* Tailwind utilities */
+
+@tailwind utilities;

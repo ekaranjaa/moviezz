@@ -6,12 +6,12 @@ class Controller
     {
         $fb = $this->helper('session');
 
-        return $fb;
+        return $fb->validate();
     }
 
     protected function model(string $model)
     {
-        $model = ucwords($model);
+        $model = ucfirst($model);
 
         if (file_exists(__DIR__ . '/../models/' . $model . '.php')) {
             require_once __DIR__ . '/../models/' . $model . '.php';
@@ -30,7 +30,7 @@ class Controller
 
     protected function helper(string $helper, string $destination = '')
     {
-        $helper = ucwords($helper) . 'Helper';
+        $helper = ucfirst($helper) . 'Helper';
 
         if (file_exists(__DIR__ . '/../helpers/' . $helper . '.php')) {
             require_once __DIR__ . '/../helpers/' .  $helper . '.php';

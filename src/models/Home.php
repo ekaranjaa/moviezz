@@ -4,6 +4,8 @@ class Home extends Model
 {
     public function read(int $user_id)
     {
+        $user_id = $this->filter($user_id);
+
         if ($user_id > 0) {
             $query = "SELECT * FROM `movies` WHERE `user_id`='$user_id' ORDER BY `created_at` DESC";
         } else {

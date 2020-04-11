@@ -1,186 +1,73 @@
-<nav class="navbar-fixed">
-    <nav class="nav-extended">
-        <div class="nav-wrapper s-container">
-            <a class="brand-logo" href="/">moviezz</a>
-            <ul class="right hide-on-med-and-down">
-                <?php if (!$user) : ?>
-                    <li><a class="waves-effect waves-light btn modal-trigger" href="#authForm">LOGIN</a></li>
-                <?php else : ?>
-                    <li>
-                        <a class="user-profile dropdown-trigger" data-target="userProfile">
-                            <div class="profile-image">
-                                <img src="/images/users/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>">
-                            </div>
-                            <span><?= $user['username'] ?></span>
-                        </a>
-                        <ul id="userProfile" class="dropdown-content">
-                            <li><a href="/user/edit/<?= $user['username'] ?>">Profile</a></li>
-                            <li><a href="/user/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                <?php endif; ?>
-            </ul>
-        </div>
-
-        <?php
-        $url = $_SERVER['REQUEST_URI'];
-        $bcs = [];
-
-        if (!empty($url)) {
-            $bcs = explode('/', substr($url, 1));
-        }
-        ?>
-
-        <div class="nav-wrapper s-container">
-            <div class="col s12">
-                <a href="/" class="breadcrumb">Home</a>
-                <?php if (!empty($bcs[0])) : ?>
-                    <a href="/<?= $bcs[0] ?>" class="breadcrumb"><?= ucfirst($bcs[0]) ?></a>
-                    <a href="/<?= $bcs[0] . '/' . $bcs[1] ?>" class="breadcrumb"><?= ucfirst($bcs[1]) ?></a>
-                    <?php if (!empty($bcs[2])) : ?>
-                        <a href="/<?= $bcs[0] . '/' . $bcs[1] . '/' . $bcs[2] ?>" class="breadcrumb"><?= ucfirst($bcs[2]) ?></a>
-                <?php
-                    endif;
-                endif;
-                ?>
-
-                <?php if ($user) : ?>
-                    <a href="#addMovie" class="btn-floating btn-large halfway-fab waves-effect waves-light teal modal-trigger">
-                        <i class="material-icons">add</i>
-                    </a>
-                <?php endif; ?>
+<nav class="navbar bg-gray-800 fixed top-0 inset-x-0 border-b border-gray-700 z-10">
+    <div class="container py-3 px-6 xl:px-0 flex items-center justify-between">
+        <a href="/">
+            <div class="logo">
+                <p>Moviezz</p>
             </div>
+        </a>
+        <div id="searchForm" class="search-form absolute top-0 left-0 w-full -mt-16 py-2 px-3 bg-gray-800 border-b border-gray-700 lg:border-none lg:relative lg:max-w-2xl lg:p-0 lg:m-0 transition duration-150 ease-in-out">
+            <form action="/search" method="GET" autocomplete="off" class="container px-3 text-gray-500 flex items-center justify-start border-2 border-gray-700 bg-gray-700 rounded focus-within:bg-gray-800 overflow-hidden transition duration-200 ease-in-out md:relative">
+                <div class="mr-3 text-xl text-gray-600">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="search" name="query" placeholder="Search..." value="<?= $_GET['query'] ?>" class="py-2 bg-transparent w-full focus:outline-none appearance-none leading-normal" />
+            </form>
         </div>
-    </nav>
+        <div class="actions flex items-center justify-start">
+            <button id="searchToggle" class="mr-5 btn btn-text lg:hidden"><i class="fas fa-search"></i></button>
+            <?php if (!$user) : ?>
+                <a href="/user/login" class="btn btn-primary">LOGIN OR SIGNUP</a>
+            <?php else : ?>
+                <button id="modalToggle" class="mr-5 btn btn-primary"><i class="fas fa-plus"></i></button>
+                <div class="relative">
+                    <div id="avatar" class="avatar h-10 w-10 rounded-full cursor-pointer overflow-hidden">
+                        <img src="/images/users/<?= $user['avatar'] ?>" alt="<?= $user['name'] ?>" class="h-full">
+                    </div>
+                    <div id="profileMenu" class="mt-12 w-32 bg-gray-800 border border-gray-700 rounded absolute top-0 right-0 hidden">
+                        <a href="/user/edit/<?= $user['username'] ?>" class="p-2 block w-full hover:bg-gray-700">Profile</a>
+                        <a href="/user/logout" class="p-2 block w-full hover:bg-gray-700">Logout</a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 </nav>
 
-<!-- Login / Signup modal -->
-<div id="authForm" class="modal">
-    <div class="modal-content">
-        <a class="modal-close waves-effect waves-light btn-flat right"><i class="material-icons">close</i></a>
-        <div class="row">
-            <div class="col s12">
-                <ul class="tabs">
-                    <li class="tab col s6"><a href="#login" class="active">Loign</a></li>
-                    <li class="tab col s6"><a href="#signup">Signup</a></li>
-                </ul>
-            </div>
-            <div id="login" class="col s12">
-                <div class="container-half">
-                    <form action="/user/login" method="POST">
-                        <div class="input-field">
-                            <input id="loginUsername" type="text" name="username" class="validate" value="<?= $return_data['username'] ?>">
-                            <label for="loginUsername">Username</label>
-                        </div>
-                        <div class="input-field">
-                            <input id="loginPassword" type="password" name="password" class="validate">
-                            <label for="loginPassword">Password</label>
-                        </div>
-                        <p class="right-align">
-                            <span><a href="/user/reset" class="materialize-red-text">Forgot password ?</a></span>
-                        </p>
-                        <p>
-                            <label>
-                                <input type="checkbox" value="1" name="remember_me" checked />
-                                <span>Remember me</span>
-                            </label>
-                        </p>
-                        <div class="content-center">
-                            <button type="submit" class="waves-effect waves-light btn-large btn-half-fit">Login</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div id="signup" class="col s12">
-                <form action="/user/register" method="POST" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="name" type="text" name="name" class="validate" value="<?= $return_data['name'] ?>">
-                            <label class="active" for="name">Name</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="email" type="text" name="email" class="validate" value="<?= $return_data['email'] ?>">
-                            <label for="email">Email</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="username" type="text" name="username" class="validate" value="<?= $return_data['username'] ?>">
-                            <label for="username">Username</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="password" type="password" name="password" class="validate">
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="confirmPassword" type="password" name="confirm_password" class="validate">
-                            <label for="confirmPassword">Confirm password</label>
-                        </div>
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>File</span>
-                                <input type="file" name="avatar">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Choose image">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-center">
-                        <button type="submit" class="waves-effect waves-light btn-large btn-half-fit">Signup</button>
-                    </div>
-                </form>
-            </div>
+<?php if ($user) : ?>
+    <div id="modal" class="modal hidden">
+        <div class="head p-3 border-b border-gray-700 flex items-center justify-between">
+            <p class="text-xl font-medium">Add movie</p>
+            <button id="modalClose" class="h-8 w-8 rounded-full hover:bg-gray-700 focus:outline-none"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="form">
+            <form action="/movie/add" enctype="multipart/form-data" method="POST" autocomplete="off">
+                <label for="coverImage" class="mb-3 btn btn-neutral">
+                    <span>Upload thumbnail</span>
+                    <input type="file" name="thumbnail" id="coverImage" hidden required>
+                </label>
+                <input type="text" name="name" placeholder="Name" class="my-3 input" required>
+                <select name="genre" id="genre" class="my-3 input" required>
+                    <option value="-">-</option>
+                    <option value="action">Action</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="animation">Animation</option>
+                    <option value="thriller">Thriller</option>
+                    <option value="documentary">Documentary</option>
+                </select>
+                <input type="number" name="price" min="0" max="500" placeholder="Price" class="my-3 input" required>
+                <textarea name="description" id="description" class="my-3 input" placeholder="Description" required></textarea>
+                <button type="submit" class="mt-6 w-full btn btn-primary">Add movie</button>
+            </form>
         </div>
     </div>
-</div>
+<?php endif; ?>
 
-<!-- Movie modal -->
-<div id="addMovie" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Add movie</h4>
-            <a class="modal-close waves-effect waves-light btn-flat"><i class="material-icons">close</i></a>
+<!-- -------- -->
+<div class="container mt-16 p-3">
+
+    <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
+        <div id="feedback" class="fb mb-3 p-3 text-center text-gray-500 rounded bg-gray-700">
+            <p><i class="fas fa-info-circle"></i> <span><?= $_SESSION['fb'] ?></span></p>
+            <?php unset($_SESSION['fb']); ?>
         </div>
-        <form action="/movie/add" method="POST" enctype="multipart/form-data">
-            <div class="row">
-                <div class="file-field input-field col s12">
-                    <div class="btn">
-                        <span>File</span>
-                        <input type="file" name="cover_image">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Choose cover image">
-                    </div>
-                </div>
-                <div class="input-field col s6">
-                    <input id="loginName" type="text" name="name" class="validate" value="<?= $return_data['name'] ?>">
-                    <label class="active" for="loginName">Name</label>
-                </div>
-                <div class="input-field col s6">
-                    <input id="price" type="text" name="price" class="validate" value="<?= $return_data['price'] ?>">
-                    <label class="active" for="price">Price</label>
-                </div>
-                <div class="input-field col s12">
-                    <select name="type">
-                        <option value="" disabled selected>Choose option</option>
-                        <option value="Action">Action</option>
-                        <option value="Thriller">Thriller</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Series">Series</option>
-                        <option value="Animation">Animation</option>
-                        <option value="Documentary">Documentary</option>
-                    </select>
-                    <label>Type</label>
-                </div>
-                <div class="input-field col s12">
-                    <textarea id="description" class="materialize-textarea" name="description"><?= $return_data['description'] ?></textarea>
-                    <label for="description">Ddescription</label>
-                </div>
-            </div>
-            <div class="content-center">
-                <button type="submit" class="waves-effect waves-light btn-large btn-half-fit">Add</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<?php unset($_SESSION['form_input']); ?>
+    <?php endif; ?>

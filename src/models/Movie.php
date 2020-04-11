@@ -4,15 +4,15 @@ class Movie extends Model
 {
     public function create(array $movie)
     {
-        $user_id = $movie['user_id'];
-        $cover_image = $movie['cover_image'];
-        $name = $movie['name'];
-        $slug = $movie['slug'];
-        $type = $movie['type'];
-        $price = $movie['price'];
-        $description = $movie['description'];
+        $user_id = $this->filter($movie['user_id']);
+        $thumbnail = $this->filter($movie['thumbnail']);
+        $name = $this->filter($movie['name']);
+        $slug = $this->filter($movie['slug']);
+        $genre = $this->filter($movie['genre']);
+        $price = $this->filter($movie['price']);
+        $description = $this->filter($movie['description']);
 
-        $query = "INSERT INTO `movies`(`user_id`,`cover_image`,`name`,`slug`,`type`,`price`,`description`) VALUES('$user_id','$cover_image','$name','$slug','$type','$price','$description')";
+        $query = "INSERT INTO `movies`(`user_id`,`thumbnail`,`name`,`slug`,`genre`,`price`,`description`) VALUES('$user_id','$thumbnail','$name','$slug','$genre','$price','$description')";
 
         if ($this->sql()->query($query)) {
             $fb = true;
@@ -25,10 +25,16 @@ class Movie extends Model
 
     public function read(array $movie)
     {
-        $id = $movie['id'];
-        $slug = $movie['slug'];
+        $id = $this->filter($movie['id']);
+        $user_id = $this->filter($movie['user_id']);
+        $slug = $this->filter($movie['slug']);
+        $genre = $this->filter($movie['genre']);
 
-        $query = "SELECT * FROM `movies` WHERE `id`='$id' OR `slug`='$slug'";
+        if ($user_id > 0) {
+            $query = "SELECT * FROM `movies` WHERE (`id`='$id') OR (`slug`='$slug') OR (`genre`='$genre') AND (`user_id`='$user_id')";
+        } else {
+            $query = "SELECT * FROM `movies` WHERE (`id`='$id') OR (`slug`='$slug') OR (`genre`='$genre')";
+        }
 
         if ($this->sql()->query($query)) {
             $fb = $this->sql()->query($query);
@@ -39,17 +45,17 @@ class Movie extends Model
         return $fb;
     }
 
-    public function edit(array $movie)
+    public function update(array $movie)
     {
-        $id = $movie['id'];
-        $cover_image = $movie['cover_image'];
-        $name = $movie['name'];
-        $slug = $movie['slug'];
-        $type = $movie['type'];
-        $price = $movie['price'];
-        $description = $movie['description'];
+        $id = $this->filter($movie['id']);
+        $thumbnail = $this->filter($movie['thumbnail']);
+        $name = $this->filter($movie['name']);
+        $slug = $this->filter($movie['slug']);
+        $genre = $this->filter($movie['genre']);
+        $price = $this->filter($movie['price']);
+        $description = $this->filter($movie['description']);
 
-        $query = "UPDATE `movies` SET `cover_image`='$cover_image',`name`='$name',`slug`='$slug',`type`='$type',`price`='$price', `description`='$description' WHERE `id`='$id'";
+        $query = "UPDATE `movies` SET `thumbnail`='$thumbnail',`name`='$name',`slug`='$slug',`genre`='$genre',`price`='$price', `description`='$description' WHERE `id`='$id'";
 
         if ($this->sql()->query($query)) {
             $fb = true;
@@ -62,6 +68,8 @@ class Movie extends Model
 
     public function delete(string $slug)
     {
+        $slug = $this->filter($slug);
+
         $query = "DELETE FROM `movies` WHERE `slug`='$slug'";
 
         if ($this->sql()->query($query)) {

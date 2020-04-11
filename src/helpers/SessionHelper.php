@@ -2,7 +2,7 @@
 
 class SessionHelper extends Helper
 {
-    public function __construct()
+    public function validate()
     {
         if (empty($_SESSION['user']) && empty($_COOKIE['user'])) {
             $fb = false;

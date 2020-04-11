@@ -15,4 +15,9 @@ class Model
 
         return $sql->connect();
     }
+
+    public function filter($value = '')
+    {
+        return $this->sql()->real_escape_string(htmlspecialchars($value));
+    }
 }

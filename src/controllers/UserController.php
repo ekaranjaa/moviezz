@@ -19,14 +19,14 @@ class UserController extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->user = [
-                'id' => !empty($_POST['id']) ? $_POST['id'] : 2,
+                'id' => isset($_POST['id']) ? $_POST['id'] : null,
                 'avatar' => $_FILES['avatar'],
                 'name' => $_POST['name'],
                 'email' => $_POST['email'],
                 'username' => $_POST['username'],
                 'password' => $_POST['password'],
                 'confirm_password' => $_POST['confirm_password'],
-                'remember_me' => !empty($_POST['remember_me']) ? $_POST['remember_me'] : 2
+                'remember_me' => isset($_POST['remember_me']) ? $_POST['remember_me'] : null
             ];
         }
     }
@@ -38,33 +38,41 @@ class UserController extends Controller
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->create();
+            $this->createUser();
         } else {
-            $_SESSION['fb'] = 'Request method must be post';
-            header('location: /');
+            $this->view('user/register');
         }
     }
 
     public function edit(string $username)
     {
         if ($this->userSession()) {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $this->update($username);
-            } else {
-                $this->user['username'] = $username;
+            $currentUser = isset($_SESSION['user']) ? $_SESSION['user']['username'] : unserialize($_COOKIE['user'])['username'];
 
-                $data = $this->model->read($this->user);
+            if ($username == $currentUser) {
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $this->updateUser($username);
+                } else {
+                    $this->user['username'] = $username;
 
-                if ($data->num_rows > 0) {
-                    while ($row = $data->fetch_assoc()) {
-                        $fb = $row;
+                    $data = $this->model->read($this->user);
+
+                    if ($data->num_rows > 0) {
+                        while ($row = $data->fetch_assoc()) {
+                            $fb = $row;
+                        }
+                    } else {
+                        $_SESSION['fb'] = 'The specified user doesn\'t exist';
+                        header('location: /');
                     }
-                }
 
-                $this->view('edit', $fb);
+                    $this->view('user/edit', $fb);
+                }
+            } else {
+                $_SESSION['fb'] = 'Permission denied';
+                header('location: /');
             }
         } else {
-            $_SESSION['fb'] = 'You need to be logged in to perform this action';
             header('location: /');
         }
     }
@@ -72,7 +80,7 @@ class UserController extends Controller
     public function remove(string $username)
     {
         if ($this->userSession()) {
-            $this->delete($username);
+            $this->deleteUser($username);
         } else {
             $_SESSION['fb'] = 'You need to be logged in to perform this action';
             header('location: /');
@@ -98,7 +106,7 @@ class UserController extends Controller
                     while ($row = $data->fetch_assoc()) {
                         if ($username == $row['username']) {
                             if (password_verify($password, $row['password'])) {
-                                $_SESSION['fb'] = 'Successfully logged in';
+                                $_SESSION['fb'] = 'Login success';
 
                                 $user = [
                                     'id' => $row['id'],
@@ -118,25 +126,24 @@ class UserController extends Controller
                             } else {
                                 $_SESSION['form_input'] = $this->user;
                                 $_SESSION['fb'] = 'Incorrect password for user ' . $username;
-                                header('location: /');
+                                header('location: /user/login');
                             }
                         } else {
                             $_SESSION['fb'] = 'User ' . $username . ' does not exist';
-                            header('location: /');
+                            header('location: /user/login');
                         }
                     }
                 } else {
                     $_SESSION['fb'] = 'User ' . $username . ' does not exist';
-                    header('location: /');
+                    header('location: /user/login');
                 }
             } else {
                 $_SESSION['form_input'] = $this->user;
                 $_SESSION['fb'] = $this->validate->fb;
-                header('location: /');
+                header('location: /user/login');
             }
         } else {
-            $_SESSION['fb'] = 'Invalid request';
-            header('location: /');
+            $this->view('user/login');
         }
     }
 
@@ -176,11 +183,11 @@ class UserController extends Controller
                                     $this->user['username'] = $row['username'];
                                     $this->user['avatar'] = $row['avatar'];
 
-                                    if ($this->model->edit($this->user)) {
-                                        $_SESSION['fb'] = 'Password reset successfully<br>Login here';
-                                        header('location: /');
+                                    if ($this->model->update($this->user)) {
+                                        $_SESSION['fb'] = 'Password reset successfully. Login here';
+                                        header('location: /user/login');
                                     } else {
-                                        $_SESSION['fb'] = 'Password reset error. Try again later';
+                                        $_SESSION['fb'] = 'Password reset error. Try again in a few minutes.';
                                         header('location: /user/reset');
                                     }
                                 }
@@ -207,7 +214,7 @@ class UserController extends Controller
                 header('location: /');
             }
         } else {
-            $this->view('reset');
+            $this->view('user/reset');
         }
     }
 
@@ -215,7 +222,7 @@ class UserController extends Controller
     /**
      * Crud methods
      */
-    public function create()
+    public function createUser()
     {
         if ($this->validate->fields($this->user)) {
             if ($this->validate->email($this->user['email'])) {
@@ -230,7 +237,7 @@ class UserController extends Controller
                             if ($email == $row['email'] || $username == $row['username']) {
                                 $user = $email == $row['email'] ? $email : $username;
                                 $_SESSION['fb'] = 'User ' . $user . ' already exists';
-                                header('location: /');
+                                header('location: /user/register');
                             }
                         }
                     } else {
@@ -257,31 +264,31 @@ class UserController extends Controller
                                 }
                             } else {
                                 $_SESSION['fb'] = 'Error registering.';
-                                header('location: /');
+                                header('location: /user/register');
                             }
                         } else {
                             $_SESSION['form_input'] = $this->user;
                             $_SESSION['fb'] = 'Error uploading image: ' . $this->imgHelper->fb;
-                            header('location: /');
+                            header('location: /user/register');
                         }
                     }
                 } else {
                     $_SESSION['form_input'] = $this->user;
                     $_SESSION['fb'] = $this->validate->fb;
-                    header('location: /');
+                    header('location: /user/register');
                 }
             } else {
                 $_SESSION['fb'] = $this->validate->fb;
-                header('location: /');
+                header('location: /user/register');
             }
         } else {
             $_SESSION['form_input'] = $this->user;
             $_SESSION['fb'] = $this->validate->fb;
-            header('location: /');
+            header('location: /user/register');
         }
     }
 
-    public function read()
+    public function fetchUser()
     {
         $data = $this->model->read();
 
@@ -296,7 +303,7 @@ class UserController extends Controller
         return $fb;
     }
 
-    public function update(string $username)
+    public function updateUser(string $username)
     {
         $data = $this->model->read($this->user);
         if ($data->num_rows > 0) {
@@ -329,14 +336,12 @@ class UserController extends Controller
                                 if ($this->imgHelper->uploadImage($this->user['avatar'], $this->user['username'])) {
                                     $this->user['avatar'] = $this->imgHelper->fb;
 
-                                    if ($this->model->edit($this->user)) {
+                                    if ($this->model->update($this->user)) {
                                         $_SESSION['fb'] = 'Profile successfully updated';
 
-                                        if (!empty($_SESSION['user'])) {
-                                            unset($_SESSION['user']);
+                                        if (isset($_SESSION['user'])) {
                                             $_SESSION['user'] = $user;
                                         } else {
-                                            setcookie('user', '', time() - 3600, '/');
                                             setcookie('user', $user, time() + (3600 * 24), '/');
                                         }
 
@@ -353,16 +358,14 @@ class UserController extends Controller
                                 if ($this->imgHelper->renameImage($row['avatar'], $this->user['username'])) {
                                     $this->user['avatar'] = $this->imgHelper->fb;
 
-                                    if ($this->model->edit($this->user)) {
+                                    if ($this->model->update($this->user)) {
                                         $_SESSION['fb'] = 'Profile successfully updated';
 
                                         $data = $this->model->read($this->user);
 
-                                        if (!empty($_SESSION['user'])) {
-                                            unset($_SESSION['user']);
+                                        if (isset($_SESSION['user'])) {
                                             $_SESSION['user'] = $user;
                                         } else {
-                                            setcookie('user', '', time() - 3600, '/');
                                             setcookie('user', $user, time() + (3600 * 24), '/');
                                         }
 
@@ -392,7 +395,7 @@ class UserController extends Controller
         }
     }
 
-    public function delete(string $username)
+    public function deleteUser(string $username)
     {
         $this->user['username'] = $username;
         $data = $this->model->read($this->user);
@@ -401,10 +404,8 @@ class UserController extends Controller
             while ($row = $data->fetch_assoc()) {
                 if ($this->imgHelper->removeImage($row['avatar'])) {
                     if ($this->model->delete($username)) {
+                        $this->logout();
                         $_SESSION['fb'] = 'Account deleted';
-                        unset($_SESSION['user']);
-                        setcookie('user', '', time() - 3600, '/');
-                        header('location: /');
                     } else {
                         $_SESSION['fb'] = 'Error deleting account';
                         header('location: /');

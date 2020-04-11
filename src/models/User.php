@@ -4,11 +4,11 @@ class User extends Model
 {
     public function create(array $user)
     {
-        $avatar = $user['avatar'];
-        $name = $user['name'];
-        $email = $user['email'];
-        $username = $user['username'];
-        $password = password_hash($user['password'], PASSWORD_BCRYPT);
+        $avatar = $this->filter($user['avatar']);
+        $name = $this->filter($user['name']);
+        $email = $this->filter($user['email']);
+        $username = $this->filter($user['username']);
+        $password = password_hash($this->filter($user['password']), PASSWORD_BCRYPT);
 
         $query = "INSERT INTO `users`(`avatar`,`name`,`email`,`username`,`password`) VALUES('$avatar','$name','$email','$username','$password')";
 
@@ -23,11 +23,11 @@ class User extends Model
 
     public function read(array $user)
     {
-        $id = $user['id'];
-        $email = $user['email'];
-        $username = $user['username'];
+        $id = $this->filter($user['id']);
+        $email = $this->filter($user['email']);
+        $username = $this->filter($user['username']);
 
-        $query = "SELECT * FROM `users` WHERE `id`='$id' OR `email`='$email' OR `username`='$username'";
+        $query = "SELECT * FROM `users` WHERE (`id`='$id') OR (`email`='$email') OR (`username`='$username')";
 
         if ($this->sql()->query($query)) {
             $fb = $this->sql()->query($query);
@@ -38,16 +38,16 @@ class User extends Model
         return $fb;
     }
 
-    public function edit(array $user)
+    public function update(array $user)
     {
-        $id = $user['id'];
-        $avatar = $user['avatar'];
-        $name = $user['name'];
-        $email = $user['email'];
-        $username = $user['username'];
-        $password = password_hash($user['password'], PASSWORD_BCRYPT);
+        $id = $this->filter($user['id']);
+        $avatar = $this->filter($user['avatar']);
+        $name = $this->filter($user['name']);
+        $email = $this->filter($user['email']);
+        $username = $this->filter($user['username']);
+        $password = password_hash($this->filter($user['password']), PASSWORD_BCRYPT);
 
-        $query = "UPDATE `users` SET `avatar`='$avatar', `name`='$name',`email`='$email',`username`='$username',`password`='$password' WHERE `id`='$id' OR `email`='$email' OR `username`='$username'";
+        $query = "UPDATE `users` SET `avatar`='$avatar', `name`='$name',`email`='$email',`username`='$username',`password`='$password' WHERE (`id`='$id') OR (`email`='$email') OR (`username`='$username')";
 
         if ($this->sql()->query($query)) {
             $fb = true;
@@ -60,6 +60,8 @@ class User extends Model
 
     public function delete(string $username)
     {
+        $username = $this->filter($username);
+
         $query = "DELETE FROM `users` WHERE `username`='$username'";
 
         if ($this->sql()->query($query)) {

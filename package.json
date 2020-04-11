@@ -1,0 +1,29 @@
+{
+  "name": "moviezz",
+  "version": "1.0.0",
+  "description": "A simple movie app illustrating basic php-core concepts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwind build src/assets/css/tailwind.css -o public/css/tailwind.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekaranja306/php-concepts.git"
+  },
+  "keywords": [
+    "php",
+    "mvc",
+    "php-core",
+    "php-mvc"
+  ],
+  "author": "Emmanuel Karanja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekaranja306/php-concepts/issues"
+  },
+  "homepage": "https://github.com/ekaranja306/php-concepts#readme",
+  "dependencies": {
+    "tailwindcss": "^1.2.0"
+  }
+}
