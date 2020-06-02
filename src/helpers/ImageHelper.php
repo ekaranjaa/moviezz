@@ -30,7 +30,7 @@ class ImageHelper extends Helper
             }
 
             if (in_array($file_type, $this->validtypes)) {
-                if ($size > 2000000) {
+                if ($size > 5000000) {
                     $this->fb = 'File size is too large';
                     $fb = false;
                 } else {

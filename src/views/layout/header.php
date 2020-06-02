@@ -47,7 +47,7 @@
                 </label>
                 <input type="text" name="name" placeholder="Name" class="my-3 input" required>
                 <select name="genre" id="genre" class="my-3 input" required>
-                    <option value="-">-</option>
+                    <option value="null">Select category</option>
                     <option value="action">Action</option>
                     <option value="comedy">Comedy</option>
                     <option value="animation">Animation</option>
