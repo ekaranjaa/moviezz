@@ -24,7 +24,7 @@
         </div>
         <div class="copyright py-3 flex items-center justify-between">
             <div>
-                © 2020 Copyright Emmanuel Karanja
+                © 2020 Emmanuel Karanja
             </div>
             <div>
                 <a target="_blank" href="https://github.com/ekaranja306" class="text-indigo-400">GitHub</a>
