@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layout/head.php'; ?>
 <div class="create p-5">
     <div class="highlight text-center leading-10">
-        <h1 class="font-medium text-3xl">Oops! That's not</h1>
+        <h1 class="font-medium text-3xl">Oops! That's not good</h1>
         <p class="font-light">How inconvenient of you.</p>
     </div>
     <form action="/user/reset" method="POST" autocomplete="off" class="form">
