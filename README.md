@@ -3,6 +3,7 @@
 Simple movie app illustrating php `MVC, CRUD and Form validation` concepts.
 
 # Set up
+Create virtualhost pointing to `public/`
 
 Install npm dependencies `npm i`
 
