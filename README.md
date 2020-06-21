@@ -1,9 +1,9 @@
-# A combination of basic php concepts
+# A combination of php concepts and best practices
 
-Simple movie app illustrating php `MVC, CRUD and Form validation` concepts.
+Simple movie app illustrating php `OOP, MVC, CRUD, file handling and user authentication`
 
 # Set up
-Create virtualhost pointing to `public/`
+Create virtualhost pointing to `public/` eg `moviezz.test`
 
 Install npm dependencies `npm i`
 
