@@ -21,7 +21,7 @@
                         </div>
                         <?php if ($user) : ?>
                             <div class="text-gray-500 text-sm flex items-center justify-start self-end">
-                                <a href="/movie/remove/<?= $movie['slug'] ?>" class="block mr-3 h-8 w-8 text-center leading-8 rounded-full hover:bg-gray-700"><i class="fas fa-trash-alt"></i></a>
+                                <button onclick="if(!confirm('Are you sure you want to delete this movie? This cannot be undone')) return; window.location.href = '/movie/remove/<?= $movie['slug'] ?>'" class="block mr-3 h-8 w-8 text-center leading-8 rounded-full hover:bg-gray-700"><i class="fas fa-trash-alt"></i></button>
                                 <a href="/movie/edit/<?= $movie['id'] ?>" class="block h-8 w-8 text-center leading-8 rounded-full hover:bg-gray-700"><i class="fas fa-edit"></i></a>
                             </div>
                         <?php endif; ?>

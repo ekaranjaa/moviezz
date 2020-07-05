@@ -1,12 +1,12 @@
 window.onload = () => {
-  let searchToggle = document.getElementById("searchToggle");
-  let searchForm = document.getElementById("searchForm");
-  let feedback = document.getElementById("feedback");
-  let modalToggle = document.getElementById("modalToggle");
-  let modal = document.getElementById("modal");
-  let modalClose = document.getElementById("modalClose");
-  let avatar = document.getElementById("avatar");
-  let profileMenu = document.getElementById("profileMenu");
+  const searchToggle = document.getElementById("searchToggle");
+  const searchForm = document.getElementById("searchForm");
+  const feedback = document.getElementById("feedback");
+  const modalToggle = document.getElementById("modalToggle");
+  const modal = document.getElementById("modal");
+  const modalClose = document.getElementById("modalClose");
+  const avatar = document.getElementById("avatar");
+  const profileMenu = document.getElementById("profileMenu");
 
   searchToggle.onclick = () => {
     if (searchForm.classList.contains("-mt-16")) {

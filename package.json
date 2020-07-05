@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ekaranja306/php-concepts.git"
+    "url": "git+https://github.com/ekaranjaa/php-concepts.git"
   },
   "keywords": [
     "php",
@@ -20,9 +20,9 @@
   "author": "Emmanuel Karanja",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ekaranja306/php-concepts/issues"
+    "url": "https://github.com/ekaranjaa/php-concepts/issues"
   },
-  "homepage": "https://github.com/ekaranja306/php-concepts#readme",
+  "homepage": "https://github.com/ekaranjaa/php-concepts#readme",
   "dependencies": {
     "tailwindcss": "^1.2.0"
   }

@@ -17,8 +17,8 @@
             <div class="py-3">
                 <h5 class="mb-2 font-semibold">More projects</h5>
                 <ul>
-                    <li><a target="_blank" href="https://ekaranja.netlify.com" class="text-indigo-400">Portfolio</a></li>
-                    <li><a target="_blank" href="https://ekaranja306.github.io/contact-form" class="text-indigo-400">Ajax contact form</a></li>
+                    <li><a target="_blank" href="https://ekaranja.netlify.app" class="text-indigo-400">Portfolio</a></li>
+                    <li><a target="_blank" href="https://ekaranjaa.github.io/contact-form" class="text-indigo-400">Ajax contact form</a></li>
                 </ul>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 © 2020 Emmanuel Karanja
             </div>
             <div>
-                <a target="_blank" href="https://github.com/ekaranja306" class="text-indigo-400">GitHub</a>
+                <a target="_blank" href="https://github.com/ekaranjaa" class="text-indigo-400">GitHub</a>
             </div>
         </div>
     </div>

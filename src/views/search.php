@@ -31,6 +31,6 @@
         <?php endforeach; ?>
     </div>
 <?php else : ?>
-    <h3 class="font-semibold text-3xl text-gray-700">No movies were found.</h3>
+    <h3 class="font-semibold text-3xl text-gray-700">No results on <b class="px-1 rounded bg-red-300"><?= $_GET['query'] ?></b> were found.</h3>
 <?php endif; ?>
 <?php require_once __DIR__ . '/layout/foo.php'; ?>

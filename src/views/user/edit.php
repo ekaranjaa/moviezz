@@ -22,9 +22,12 @@
                         <td><label for="email" class="text-gray-500">Email:</label></td>
                         <td><input type="email" name="email" id="email" value="<?= $data['email'] ?>" class="my-2 p-2 block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required></td>
                     </tr>
+                </table>
+                <p class="my-2 p-2 text-xs text-gray-800 bg-orange-300 rounded">You can't change your username.</p>
+                <table>
                     <tr>
                         <td><label for="username" class="text-gray-500">Username:</label></td>
-                        <td><input type="text" name="username" id="username" value="<?= $data['username'] ?>" class="my-2 p-2 block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" readonly></td>
+                        <td><input type="text" name="username" id="username" value="<?= $data['username'] ?>" class="my-2 p-2 block bg-gray-800 rounded focus:outline-none" readonly></td>
                     </tr>
                 </table>
                 <p class="mt-4 mb-2 p-2 text-xs text-gray-800 bg-orange-300 rounded">Input current or new password and confirm to continue.</p>
@@ -41,7 +44,7 @@
             </div>
         </div>
         <div class="action my-8 grid grid-cols-2 gap-2">
-            <a href="/user/remove/<?= $data['username'] ?>" class="btn btn-outline btn-danger w-full">Delete account</a>
+            <button type="button" onclick="if(!confirm('Are you sure you want to delete your account? This cannot be undone')) return; window.location.href='/user/remove/<?= $data['username'] ?>'" class="btn btn-outline btn-danger w-full">Delete account</button>
             <button type="submit" class="btn btn-success w-full">Update profile</button>
         </div>
     </div>

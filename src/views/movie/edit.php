@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="action my-8 grid grid-cols-2 gap-2">
-            <a href="/movie/remove/<?= $data['slug'] ?>" class="btn btn-outline btn-danger w-full">Delete movie</a>
+            <button type="button" onclick="if(!confirm('Are you sure you want to delete this movie? This cannot be undone')) return; window.location.href = '/movie/remove/<?= $data['slug'] ?>'" class="btn btn-outline btn-danger w-full">Delete movie</button>
             <button type="submit" class="btn btn-success w-full">Update movie</button>
         </div>
     </div>
