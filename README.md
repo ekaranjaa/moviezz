@@ -2,7 +2,10 @@
 
 Simple movie app illustrating php `OOP, MVC, CRUD, file handling and user authentication`
 
+![Screenshot](public/images/screenshot.png)
+
 # Set up
+
 Create virtualhost pointing to `public/` eg `moviezz.test`
 
 Install npm dependencies `npm i`
