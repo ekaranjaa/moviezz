@@ -8,7 +8,7 @@
             <div class="card mx-auto my-5 md:m-3 p-3 max-w-xs w-full bg-gray-800 rounded hover:shadow-xl transition duration-150 ease-in-out overflow-hidden">
                 <div class="head h-48 w-full rounded overflow-hidden">
                     <a href="/movie/display/<?= $movie['slug'] ?>">
-                        <img src="/images/thumbnails/<?= $movie['thumbnail'] ?>" alt="<?= $movie['name'] ?>" class="h-full" />
+                        <img loading="lazy" src="/images/thumbnails/<?= $movie['thumbnail'] ?>" alt="<?= $movie['name'] ?>" class="h-full" />
                     </a>
                 </div>
                 <div class="body p-2">
