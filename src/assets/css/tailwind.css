@@ -17,24 +17,25 @@ img {
 }
 
 .modal {
-  @apply w-9/12 absolute bg-gray-800 rounded z-20 shadow-xl;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  @apply py-6 fixed inset-0 flex items-center justify-center z-20 overflow-auto;
 }
 
-.modal {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.modal::-webkit-scrollbar {
+  display: none;
 }
 
 @screen md {
   .modal {
-    @apply w-auto;
+    @apply p-0;
   }
 }
 
 /* Logo */
 .logo {
-  @apply font-semibold text-2xl text-red-500;
+  font-family: 'Metal Mania', cursive;
+  @apply font-semibold text-2xl text-red-500 tracking-wider;
 }
 
 /* Buttons */

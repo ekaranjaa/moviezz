@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png">
 
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/885fbd8d84.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/tailwind.css">
 </head>

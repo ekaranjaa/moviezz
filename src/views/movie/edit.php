@@ -6,9 +6,9 @@
                 <div class="mx-auto h-56 w-64 rounded-lg overflow-hidden">
                     <img src="/images/thumbnails/<?= $data['thumbnail'] ?>" alt="<?= $data['name'] ?>" class="h-full">
                 </div>
-                <label for="profilePhoto" class="my-5 mx-auto max-w-xs btn btn-neutral">
+                <label for="movieCover" class="my-5 mx-auto max-w-xs btn btn-neutral">
                     <span>Upload new thumbnail</span>
-                    <input type="file" name="thumbnail" id="profilePhoto" hidden />
+                    <input type="file" name="thumbnail" id="movieCover" onchange="previewImage(event)" required hidden />
                 </label>
             </div>
             <div>

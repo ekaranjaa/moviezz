@@ -642,32 +642,41 @@ img {
 }
 
 .modal {
-  width: 75%;
-  position: absolute;
-  background-color: #2d3748;
-  border-radius: 0.25rem;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 20;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: auto;
 }
 
-.modal {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.modal::-webkit-scrollbar {
+  display: none;
 }
 
 @media (min-width: 768px) {
   .modal {
-    width: auto;
+    padding: 0;
   }
 }
 
 /* Logo */
 
 .logo {
+  font-family: 'Metal Mania', cursive;
   font-weight: 600;
   font-size: 1.5rem;
   color: #f56565;
+  letter-spacing: 0.05em;
 }
 
 /* Buttons */

@@ -35,29 +35,40 @@
 
 <?php if ($user) : ?>
     <div id="modal" class="modal hidden">
-        <div class="head p-3 border-b border-gray-700 flex items-center justify-between">
-            <p class="text-xl font-medium">Add movie</p>
-            <button id="modalClose" class="h-8 w-8 rounded-full hover:bg-gray-700 focus:outline-none"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="form">
-            <form action="/movie/add" enctype="multipart/form-data" method="POST" autocomplete="off">
-                <label for="coverImage" class="mb-3 btn btn-neutral">
-                    <span>Upload thumbnail</span>
-                    <input type="file" name="thumbnail" id="coverImage" hidden required>
-                </label>
-                <input type="text" name="name" placeholder="Name" class="my-3 input" required>
-                <select name="genre" id="genre" class="my-3 input" required>
-                    <option value="null">Select category</option>
-                    <option value="action">Action</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="animation">Animation</option>
-                    <option value="thriller">Thriller</option>
-                    <option value="documentary">Documentary</option>
-                </select>
-                <input type="number" name="price" min="0" max="500" placeholder="Price" class="my-3 input" required>
-                <textarea name="description" id="description" class="my-3 input" placeholder="Description" required></textarea>
-                <button type="submit" class="mt-6 w-full btn btn-primary">Add movie</button>
-            </form>
+        <div class="bg-gray-800 rounded shadow-xl">
+            <div class="head p-3 border-b border-gray-700 flex items-center justify-between">
+                <p class="text-xl font-medium">Add movie</p>
+                <button id="modalClose" class="h-8 w-8 rounded-full hover:bg-gray-700 focus:outline-none"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="form">
+                <form id="movieForm" action="/movie/add" enctype="multipart/form-data" method="POST" autocomplete="off">
+                    <div class="md:flex items-start">
+                        <div class="flex-1 my-5 md:mx-5 md:my-0">
+                            <div class="mx-auto h-56 w-64 rounded overflow-hidden">
+                                <img src="/images/preview.png" alt="Cover image preview" class="h-full">
+                            </div>
+                            <label for="coverPhoto" class="mt-5 btn btn-neutral">
+                                <span>Upload thumbnail</span>
+                                <input type="file" name="thumbnail" id="coverPhoto" onchange="previewImage(event)" required hidden>
+                            </label>
+                        </div>
+                        <div class="flex-1 my-5 md:mx-5 md:my-0">
+                            <input type="text" name="name" placeholder="Name" class="mb-5 input" required>
+                            <select name="genre" id="genre" class="mb-5 input" required>
+                                <option value="null">Select category</option>
+                                <option value="action">Action</option>
+                                <option value="comedy">Comedy</option>
+                                <option value="animation">Animation</option>
+                                <option value="thriller">Thriller</option>
+                                <option value="documentary">Documentary</option>
+                            </select>
+                            <input type="number" name="price" min="0" max="500" placeholder="Price" class="mb-5 input" required>
+                            <textarea name="description" id="description" class="mb-5 input" placeholder="Description" required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-6 w-full btn btn-primary">Add movie</button>
+                </form>
+            </div>
         </div>
     </div>
 <?php endif; ?>

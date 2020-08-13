@@ -1,4 +1,11 @@
 module.exports = {
+  purge: {
+    enabled: true,
+    content: [
+      './src/views/**/*.php',
+      './public/**/*.js'
+    ]
+  },
   theme: {
     extend: {
       height: (theme) => ({
