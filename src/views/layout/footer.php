@@ -18,6 +18,8 @@
                 <h5 class="mb-2 font-semibold">More projects</h5>
                 <ul>
                     <li><a target="_blank" href="https://ekaranja.netlify.app" class="text-indigo-400">Portfolio</a></li>
+                    <li><a target="_blank" href="https://passgenn.netlify.app" class="text-indigo-400">Password generator</a></li>
+                    <li><a target="_blank" href="https://intgame.netlify.app" class="text-indigo-400">Abacus game</a></li>
                     <li><a target="_blank" href="https://ekaranjaa.github.io/contact-form" class="text-indigo-400">Ajax contact form</a></li>
                 </ul>
             </div>
