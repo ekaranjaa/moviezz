@@ -8,7 +8,7 @@ class Search extends Model
         $param = '%' . $param . '%';
 
         if (!empty($user_id)) {
-            $query = "SELECT * FROM `movies` WHERE (`name` LIKE '$param') OR (`slug` LIKE '$param') OR (`genre` LIKE '$param') AND (`user_id`='$user_id')";
+            $query = "SELECT * FROM `movies` WHERE (`name` LIKE '$param') OR (`slug` LIKE '$param') OR (`genre` LIKE '$param') AND (`user_id`=$user_id)";
         } else {
             $query = "SELECT * FROM `movies` WHERE (`name` LIKE '$param') OR (`slug` LIKE '$param') OR (`genre` LIKE '$param')";
         }
