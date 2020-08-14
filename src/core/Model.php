@@ -6,11 +6,13 @@ class Model
     {
         require_once __DIR__ . '/../config/Db.php';
 
+        $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
         $sql = new Db([
-            'host' => 'localhost',
-            'username' => 'root',
-            'password' => 'password',
-            'database' => 'moviezz'
+            'host' => $url["host"],
+            'username' => $url["user"],
+            'password' => $url["pass"],
+            'database' => substr($url["path"], 1)
         ]);
 
         return $sql->connect();
