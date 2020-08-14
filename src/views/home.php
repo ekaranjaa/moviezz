@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/layout/head.php'; ?>
+<?php require_once __DIR__ . '/layout/header.php'; ?>
+
 <?php if (!empty($data)) : ?>
     <div class="md:flex items-center justify-evenly flex-wrap">
         <?php foreach ($data as $movie) : ?>
@@ -37,4 +38,5 @@
         <h3 class="font-semibold text-3xl text-gray-700">No movies available</h3>
     <?php endif; ?>
 <?php endif; ?>
-<?php require_once __DIR__ . '/layout/foo.php'; ?>
+
+<?php require_once __DIR__ . '/layout/footer.php'; ?>

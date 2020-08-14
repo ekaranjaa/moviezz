@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/../layout/head.php'; ?>
+<?php require_once __DIR__ . '/../layout/header.php'; ?>
+
 <div class="-my-3 -mx-3 md:mx-auto p-5 md:bg-gray-800 max-w-4xl">
     <div class="flex items-center justify-between">
         <div>
@@ -25,4 +26,5 @@
         <p><?= $data['description'] ?></p>
     </div>
 </div>
-<?php require_once __DIR__ . '/../layout/foo.php'; ?>
+
+<?php require_once __DIR__ . '/../layout/footer.php'; ?>

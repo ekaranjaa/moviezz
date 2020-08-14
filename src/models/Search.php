@@ -2,15 +2,23 @@
 
 class Search extends Model
 {
-    public function read(string $param, int $user_id = null)
+    public function read(string $param = null, int $user_id = null, string $field = '*')
     {
-        $param = $this->filter(strtolower($param));
-        $param = '%' . $param . '%';
-
-        if (!empty($user_id)) {
-            $query = "SELECT * FROM `movies` WHERE (`name` LIKE '$param') OR (`slug` LIKE '$param') OR (`genre` LIKE '$param') AND (`user_id`=$user_id)";
+        if (empty($param)) {
+            if (!empty($user_id)) {
+                $query = "SELECT $field FROM `movies` WHERE (`user_id`='$user_id')";
+            } else {
+                $query = "SELECT $field FROM `movies`";
+            }
         } else {
-            $query = "SELECT * FROM `movies` WHERE (`name` LIKE '$param') OR (`slug` LIKE '$param') OR (`genre` LIKE '$param')";
+            $param = $this->filter(strtolower($param));
+            $param = '%' . $param . '%';
+
+            if (!empty($user_id)) {
+                $query = "SELECT $field FROM `movies` WHERE (`name` LIKE '$param') OR (`slug` LIKE '$param') OR (`genre` LIKE '$param') AND (`user_id`='$user_id')";
+            } else {
+                $query = "SELECT $field FROM `movies` WHERE (`name` LIKE '$param') OR (`slug` LIKE '$param') OR (`genre` LIKE '$param')";
+            }
         }
 
         if ($this->sql()->query($query)) {

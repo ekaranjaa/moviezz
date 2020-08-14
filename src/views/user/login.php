@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/../layout/head.php'; ?>
+<?php require_once __DIR__ . '/../layout/header.php'; ?>
+
 <div class="create p-5">
   <div class="highlight text-center leading-10">
     <h1 class="font-medium text-3xl">Welcome back</h1>
@@ -23,4 +24,5 @@
   </form>
 </div>
 <?php unset($_SESSION['form_input']); ?>
-<?php require_once __DIR__ . '/../layout/foo.php'; ?>
+
+<?php require_once __DIR__ . '/../layout/footer.php'; ?>

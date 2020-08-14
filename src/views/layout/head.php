@@ -25,5 +25,3 @@
     $user = isset($_SESSION['user']) && !empty($_SESSION['user']) ? $_SESSION['user'] : unserialize($_COOKIE['user']);
     $return_data = isset($_SESSION['form_input']) && !empty($_SESSION['form_input']) ? $_SESSION['form_input'] : '';
     ?>
-
-    <?php require_once __DIR__ . '/header.php'; ?>
