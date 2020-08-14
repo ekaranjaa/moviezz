@@ -16,10 +16,13 @@ img {
   @apply w-full object-cover;
 }
 
+.search_suggestions {
+  top: calc(100% + 13px);
+}
+
 .modal {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
-  @apply py-6 fixed inset-0 flex items-center justify-center z-20 overflow-auto;
 }
 
 .modal::-webkit-scrollbar {

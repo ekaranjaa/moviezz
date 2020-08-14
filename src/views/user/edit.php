@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/../layout/head.php'; ?>
+<?php require_once __DIR__ . '/../layout/header.php'; ?>
+
 <form action="/user/edit/<?= $data['username'] ?>" enctype="multipart/form-data" method="POST" autocomplete="off">
     <div class="mx-auto py-8 w-full max-w-4xl">
         <div class="md:grid grid-cols-2 items-center justify-start">
@@ -29,4 +30,5 @@
         </div>
     </div>
 </form>
-<?php require_once __DIR__ . '/../layout/foo.php'; ?>
+
+<?php require_once __DIR__ . '/../layout/footer.php'; ?>
