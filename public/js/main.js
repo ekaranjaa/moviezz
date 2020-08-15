@@ -1,3 +1,4 @@
+// Handle all search functions
 const searchToggle = document.getElementById("searchToggle")
 const searchForm = document.getElementById("searchForm")
 const searchInput = document.getElementById('searchInput')
@@ -12,10 +13,11 @@ searchToggle.onclick = () => {
 searchInput.onfocus = e => {
   e.target.parentElement.nextElementSibling.classList.remove('hidden')
   const genresContainer = document.querySelector('.search_suggestions .genres')
+  const req = new HTTP
+
   genresContainer.innerHTML = ''
 
-  fetch(`http://moviezz.test/search/genres/genre`)
-    .then(res => res.json())
+  req.get(`http://moviezz.test/search/genres/genre`)
     .then(genres => {
       if (genres.length === 0) genresContainer.innerHTML = 'No genres yet'
       genres.forEach(genre => {
@@ -35,11 +37,12 @@ searchInput.onblur = e => {
 
 searchInput.onkeyup = e => {
   const suggestionsContainer = document.querySelector('.search_suggestions .suggestions')
+  const req = new HTTP
+
   suggestionsContainer.innerHTML = ''
 
   if (e.target.value.length > 0) {
-    fetch(`http://moviezz.test/search/api?query=${e.target.value}`)
-      .then(res => res.json())
+    req.get(`http://moviezz.test/search/api?query=${e.target.value}`)
       .then(movies => {
         movies.forEach(movie => {
           suggestionsContainer.innerHTML += `
@@ -65,66 +68,79 @@ searchInput.onkeyup = e => {
   }
 }
 
+// Hide alert box after 3secs
 const feedback = document.getElementById("feedback")
-setTimeout(() => {
-  feedback.classList.add("hidden")
-}, 3000)
+if (document.body.contains(feedback)) {
+  setTimeout(() => {
+    feedback.classList.add("hidden")
+  }, 3000)
+}
 
+// Handle all modal features
 const modalToggle = document.getElementById("modalToggle")
 const modal = document.getElementById("modal")
 const modalClose = document.getElementById("modalClose")
-modalToggle.onclick = () => {
-  if (modal.classList.contains("hidden")) {
-    modal.classList.remove("hidden")
-    document.body.classList.add("overflow-hidden")
-    sessionStorage.setItem('modal', 'open')
-  } else {
+if (document.body.contains(modalToggle)) {
+  modalToggle.onclick = () => {
+    if (modal.classList.contains("hidden")) {
+      modal.classList.remove("hidden")
+      document.body.classList.add("overflow-hidden")
+      sessionStorage.setItem('modal', 'open')
+    } else {
+      modal.classList.add("hidden")
+      document.body.classList.remove("overflow-hidden")
+      sessionStorage.setItem('modal', 'close')
+    }
+  }
+
+  window.onload = () => {
+    const modalStatus = sessionStorage.getItem('modal')
+    if (modalStatus === 'open') {
+      modal.classList.remove("hidden")
+      document.body.classList.add("overflow-hidden")
+    }
+  }
+
+  modalClose.onclick = () => {
     modal.classList.add("hidden")
     document.body.classList.remove("overflow-hidden")
     sessionStorage.setItem('modal', 'close')
   }
-}
 
-window.onload = () => {
-  const modalStatus = sessionStorage.getItem('modal')
-  if (modalStatus === 'open') {
-    modal.classList.remove("hidden")
-    document.body.classList.add("overflow-hidden")
+  document.body.onkeydown = e => {
+    if (e.key === 'Escape') {
+      modal.classList.add("hidden")
+      document.body.classList.remove("overflow-hidden")
+      sessionStorage.setItem('modal', 'close')
+    }
   }
 }
 
-modalClose.onclick = () => {
-  modal.classList.add("hidden")
-  document.body.classList.remove("overflow-hidden")
-  sessionStorage.setItem('modal', 'close')
-}
-
-document.body.onkeydown = e => {
-  if (e.key === 'Escape') {
-    modal.classList.add("hidden")
-    document.body.classList.remove("overflow-hidden")
-    sessionStorage.setItem('modal', 'close')
-  }
-}
-
+// Toggle menu
 const avatar = document.getElementById("avatar")
 const profileMenu = document.getElementById("profileMenu")
-avatar.onclick = () => {
-  if (profileMenu.classList.contains("hidden")) {
-    profileMenu.classList.remove("hidden")
-  } else {
-    profileMenu.classList.add("hidden")
+if (document.body.contains(avatar)) {
+  avatar.onclick = () => {
+    if (profileMenu.classList.contains("hidden")) {
+      profileMenu.classList.remove("hidden")
+    } else {
+      profileMenu.classList.add("hidden")
+    }
   }
 }
 
+// Preview image on user select
 function previewImage(e) {
   const previewEl = e.target.parentElement.previousElementSibling.firstElementChild
   previewEl.src = URL.createObjectURL(e.target.files[0])
   previewEl.onload = () => URL.revokeObjectURL(previewEl.src)
 }
 
+// Handle movie registration
 const movieForm = document.getElementById('movieForm')
-movieForm.onsubmit = e => {
-  // e.preventDefault()
-  sessionStorage.setItem('modal', 'close')
+if (document.body.contains(movieForm)) {
+  movieForm.onsubmit = e => {
+    // e.preventDefault()
+    sessionStorage.setItem('modal', 'close')
+  }
 }
