@@ -15,13 +15,13 @@
             <div>
                 <input type="number" name="id" value="<?= $data['id'] ?>" hidden>
                 <label for="name" class="text-gray-500">Name:</label>
-                <input type="text" name="name" id="name" value="<?= $data['name'] ?>" class="my-2 p-2 block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
+                <input type="text" name="name" id="name" value="<?= $data['name'] ?>" class="my-2 p-2 w-full block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
                 <label for="email" class="text-gray-500">Email:</label>
-                <input type="email" name="email" id="email" value="<?= $data['email'] ?>" class="my-2 p-2 block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
+                <input type="email" name="email" id="email" value="<?= $data['email'] ?>" class="my-2 p-2 w-full block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
                 <label for="password" class="text-gray-500">Password:</label>
-                <p class="my-2 p-2 text-xs text-gray-800 bg-orange-300 rounded">Input current or new password and confirm to continue.</p>
-                <input type="password" name="password" id="password" placeholder="Password" class="my-2 p-2 block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
-                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" value="<?= $data['confirm_password'] ?>" class="my-2 p-2 block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
+                <p class="my-2 p-2 w-full text-xs text-gray-800 bg-orange-300 rounded">Input current or new password and confirm to continue.</p>
+                <input type="password" name="password" id="password" placeholder="Password" class="my-2 p-2 w-full block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" value="<?= $data['confirm_password'] ?>" class="my-2 p-2 w-full block bg-gray-800 border-b border-gray-700 rounded focus:outline-none" required>
             </div>
         </div>
         <div class="action my-8 grid grid-cols-2 gap-2">
