@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/head.php'; ?>
 
-<nav class="navbar bg-gray-800 fixed top-0 inset-x-0 border-b border-gray-700 z-10">
+<nav class="navbar bg-gray-800 sticky top-0 inset-x-0 border-b border-gray-700 z-10">
     <div class="container py-3 px-6 xl:px-0 flex items-center justify-between">
         <a href="/">
             <div class="logo">
@@ -40,9 +40,9 @@
 </nav>
 
 <?php if ($user) : ?>
-    <div id="modal" class="modal hidden py-6 fixed inset-0 flex items-center justify-center z-20 overflow-auto">
-        <div class="bg-gray-800 rounded shadow-xl">
-            <div class="head p-3 border-b border-gray-700 flex items-center justify-between">
+    <div id="modal" class="modal hidden absolute inset-0 flex items-center justify-center z-20 overflow-auto">
+        <div class="absolute bg-gray-800 w-full md:w-auto md:rounded-lg shadow-xl md:overflow-hidden">
+            <div class="head p-3 sticky top-0 inset-x-0 bg-gray-800 border-b border-gray-700 flex items-center justify-between">
                 <p class="text-xl font-medium">Add movie</p>
                 <button id="modalClose" class="h-8 w-8 rounded-full hover:bg-gray-700 focus:outline-none"><i class="fas fa-times"></i></button>
             </div>
@@ -80,7 +80,7 @@
 <?php endif; ?>
 
 <!-- ---Container start--- -->
-<div class="container mt-16 p-3">
+<div class="container p-3">
 
     <?php if (isset($_SESSION['fb']) && !empty($_SESSION['fb'])) : ?>
         <div id="feedback" class="fb mb-3 p-3 text-center text-gray-500 rounded bg-gray-700">

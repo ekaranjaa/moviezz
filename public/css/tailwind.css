@@ -651,16 +651,6 @@ img {
           backdrop-filter: blur(5px);
 }
 
-.modal::-webkit-scrollbar {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .modal {
-    padding: 0;
-  }
-}
-
 /* Logo */
 
 .logo {
