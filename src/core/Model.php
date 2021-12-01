@@ -4,12 +4,12 @@ class Model
 {
     protected function sql()
     {
-        require_once __DIR__ . '/../config/Db.php';
+        require_once __DIR__ . '/../config/Database.php';
 
-        $sql = new Db([
+        $sql = new Database([
             'host' => 'localhost',
-            'username' => 'root',
-            'password' => 'password',
+            'username' => 'homestead',
+            'password' => 'secret',
             'database' => 'moviezz'
         ]);
 
